@@ -1,0 +1,9 @@
+--> Mudamos as seguintes linhas do arquivo httpd.conf
+
+Localizaçao : xampp/apache/conf/httpd.conf
+
+Listen 80		# Antes
+Listen 8080		#Depois
+
+ServerName localhost:80 	# Antes
+ServerName localhost:8080	# Depois

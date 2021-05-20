@@ -1,0 +1,154 @@
+	  ___         __             _   __  __        _            _     
+	 | _ \ __ _  / _| __ _  ___ | | |  \/  |      /_\   ___ ___(_) ___
+	 |   // _` ||  _|/ _` |/ -_)| | | |\/| | _   / _ \ (_-<(_-<| |(_-<
+ 	 |_|_\\__,_||_|  \__,_|\___||_| |_|  |_|(_) /_/ \_\/__//__/|_|/__/
+	
+  ___  _  _  ___   ___             _           _     _   _     _                  
+ | _ \| || || _ \ | _ \ _ _  ___  (_) ___  __ | |_  | | | | __| | ___  _ __  _  _ 
+ |  _/| __ ||  _/ |  _/| '_|/ _ \ | |/ -_)/ _||  _| | |_| |/ _` |/ -_)| '  \| || |
+ |_|  |_||_||_|   |_|  |_|  \___/_/ |\___|\__| \__|  \___/ \__,_|\___||_|_|_|\_, |
+                                |__/                                         |__/ 
+
+-----------------------------------------------------------------------------------|
+
+		{}
+
+--> Nao da pra deletar produto por que ele esta vinculado a foregin key
+
+--> Cuidado com a sessao, paraece que nao esta salvadno o idSUser
+
+		{[0. Projeto]}
+
+--> Loja virtual : criar esse projeto, colocar no carreinho, fechar
+	de alto nível
+--> Vamos fazer um CRUD ( Create Read Update Delete)
+--> O foco será produção
+
+		{GIT}
+git add --all
+git commit -m "descricao"
+git push origin master
+
+		{[1. Banco de Dados]}
+
+--> Eles passarm no site, esta na pasta bd
+
+		{[2. Configurando VHost e outros]}
+
+--> 1. Composer
+	--> o autoload, é porque por padrao, ao executar o composer, ele cria
+		uma pasta chamda vendor, no composer.json, podemos configurar
+		pra ja ter coisa nele
+
+--> 2. Acessar o host do systema
+	--> Estamos criando um dominio virtual no nosso PC, toda vez que for 
+		acessar um dominio, busca aqui primeiro e pegar por esse link
+	--> C:\Windows\System32\drivers\etc
+	--> Coloquei : 127.0.0.1		www.php-ecommerce.com.br
+
+--> 3. Virtual Host no Apache
+	+ C:\xampp\apache\conf\extra
+	+ Coloquei
+<VirtualHost *:8080>
+    ServerAdmin webmaster@hcode.com.br
+    DocumentRoot "C:/xampp/ecommerce"
+    ServerName www.php-ecommerce.com.br
+    ErrorLog "logs/dummy-host2.example.com-error.log"
+    CustomLog "logs/dummy-host2.example.com-access.log" common
+	<Directory "C:/xampp/ecommerce">
+        Require all granted
+
+        RewriteEngine On
+
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^ index.php [QSA,L]
+	</Directory>
+</VirtualHost>
+
+--> 4. Para acessar tem que ser no link ':8080'
+	www.php-ecommerce.com.br:8080
+	+ Pois, o pdarao sem o ':8080' é a porta de numero 80, mas, como nao
+		funciona na minha maquina, entao tem que ser a 8080 e tem que
+		deixar isso explicito
+
+--> 5. Passos do gitHub
+	+ $ git init # inica projeto git na pasta
+	+ Cria bprojeto do git com mesmo nome do doc composer
+	+ $ git remote add origin [HTTPS/SSH] # adiciona um repositorio remoto praki
+	+ $ git add -all # adicioa tudo no estage area
+	+ $ git commit -m "ffirst commit"
+	+ $ git push origin master # do branch em que esta local, vai mandara pra 			master que está remota
+
+--> command : composer dump-autoload
+	+ quando dentro da pasta vendor nos colocamos algo de fora, temos que
+		sinalizar isos para o composer, e fazemos isso com esse comando
+	+ ele gera novemnete autoloads.
+	+ Ele recria auto-loads de dentro da pasta
+	
+	[3. Template RainTPL]
+
+--> Quando voce usa um template novo, voce tem que saber identificar e seprar o que
+	é header / footer / body
+	+ fazemo isso inspecionando os elementos até achaamro onde ta mesmo 
+		começando a div ou terminando
+	+ é necessario tambem configura os caminhos de arquivos css/js/img
+
+	[4. metodo __call() - Sobrecarga de métodos]	
+--> No projeto, é a classe model que vai implementar getters e setters de outras 
+	classes automaticamente. 
+
+--> WARNING! TUDO QUE FOR CRIADO DINAMIACMENTE NO PHP TEM QUE SER ENTRE CHAVES
+
+	[4. RestFull]
+
+--> Essa forma de orientar a programaçâo orientada à rotas, é chamada de API 
+	RestFULL.
+
+--> 51.776.222/0001-31
+
+--> Cuidado com a ordem que vc coloca as coisas das rotas
+
+--> Abuse de PROCEDURES EM SQL, prefira fazer PROCEDURES que facilitem do que deixar
+	tudo na WEb, isso evita muita coisa assim. Fizermos varias delas no user
+
+--> As rota no RainTPL tem que terminar com exit;
+
+	[5. Esqueceu Login]
+
+--> No geral, nao se salva a senha em forma de texto, no banco, ela é salva em
+	forma de hash. Quando a pessoa digita que esqueceu a senha, é gerada um
+	link com uma nova, peganmos esse codigo e verificamos se esse hash
+	esta dentro de um tempo limite (1h), ai, ela vai para um link
+	em que vai ter uma tela para digitar uma nova senha
+
+	[6. Criptografia para transporte em PHP]
+
+--> function : string base64_encode ( string $data )
+	+ Codifica a dada data com base64.
+	+ Esta codificação é designada para que dados binários durem no transporte 		sobre camadas de transorte que não são 8-bit clean, como mensagens 			de e-mail.
+	+ Transforma codigos nao legiveis em texto para ser enviado na net
+
+--> function : mcrypt_encrypt
+	+ Dados codificados na Base-64 tem aproximadamente 33% mais espaço que dos 		dados originais.
+
+	[ Janeiro de 2018 - Igonorei o mandar senha ]
+
+--> Recomendações: Separe bem as cosias que podem mudar
+
+--> Paginaçoa:
+	1. Do google: aquela que quando agente desce o scroll, vai carregando
+	2. A que divide em paginas mesmo,
+    + Usaremos LIMIT no banco de dados
+	LIMIT (:begin, : end)
+    + metodo do Banco MySQL: 
+	SQL_CALC_FOUND_ROWS
+	+ Serve para contar a quantidade de rows numa chamada e colocar o seu
+		valor como uma variavel de banco '@' que pode ser chamada por
+		FOUND_ROWS()
+
+	[Registrar Dominio]
+
+--> hostGator
+
+--> DNS: Domain Name System

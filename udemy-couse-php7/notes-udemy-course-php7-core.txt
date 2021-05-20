@@ -1,0 +1,2758 @@
+  ___         __             _   __  __        _            _     
+ | _ \ __ _  / _| __ _  ___ | | |  \/  |      /_\   ___ ___(_) ___
+ |   // _` ||  _|/ _` |/ -_)| | | |\/| | _   / _ \ (_-<(_-<| |(_-<
+ |_|_\\__,_||_|  \__,_|\___||_| |_|  |_|(_) /_/ \_\/__//__/|_|/__/
+
+			  ___  _  _  ___ 
+			 | _ \| || || _ \
+			 |  _/| __ ||  _/
+			 |_|  |_||_||_|  
+                 
+
+-----------------------------------------------------------------------------------|
+	
+	{[Udemy - PHP7 - HCode]}
+
+	{[ 0. Outros - Extras - Dicas - Links ]}
+
+--> Dicas Random PHP
+	+ Métodos Static são aqueles que não tem thisdentro dele
+	+ Use o Pardaro DAO paara acessar banco de Dados
+	+ Se temos um trecho que se repete varias vezes, NAO TENHA PENA DE 
+		POR ELE NUM METODO SEPARADO, ISSO VAI SER BOM NO FUTURO
+		+ Ao fazer isso, que ele seja com PARAMETROS
+	+ PHP é Back-end exclusivo da web, por isso, devemos sempre devolver
+		JSON para o Front poder manipular
+	+ usa-se $this para acessar membros (atributos, métodos) da instância e self
+		para acessar membros estáticos.
+
+--> frase : " Caprich : Fazer o melhor que pode na condiçao que tem, enquanto nao 
+	tem condiçoes melhores para fazer melhor ainda"
+
+--> Abrir CMD:
+	+ Win+r + cmd = abre o cmd
+
+--> O que pesquisar
+	+ Métodos Mágicos
+	+ Métodos do spl (lib stand do php que afz coisa legais)
+	+ Ajude a comunidade no Stack e Git, serve para ter visibilidade
+
+--> Particulariades de Sintaxe e termos em PHP
+	+ '.'  : Usamos ponto para concatenar Strings, por conta disso, nao usamos
+		ponto em outras coisas
+	+ '->' : Para executar o método de uma classe, o usamos ao invez do
+		Ponto em Java
+	+ '__'metodo que comecem com dois underlines, são métodos mágicos, métodos
+		que sâo executado auto, como construtor e destruidor
+	+ '::' = Permite acesso a metodo/atr staticos e constantes
+	+ 'parent' : Eh uma keyword do php pra se referir ao pai, e, usamos
+		'::' para chamar o método desse pai, NAO '->' 
+------------------------------------------------------------------------------------|
+	{[ 1. Hisória PHP ]}
+
+--> Havera um certifica da HCursos, pra isso teremos que desenvolver um projeto
+	em php
+	
+	[1.1. Historia do PHP]
+
+--> RASMUS LERDOF
+	+ Criador do PHP (Personal Home Page)(Recusive: HyperText PreProcessor)
+	+ Criado em C em 1994 para fazer uma contagem
+	+ Em 1998 rodava em 10% dos servidore no PHP3
+
+--> ANDI GUTMANS e ZEEV SURASKI
+	+ 2 programadores Israelensse tem que a empresa ZENDI (se nome e a fusao
+		dois nome), que cuida do PHP e que desde a versao 5 escreve o
+		core do php, seu coraçao
+	+ A primeiras versoes do php tinham muitas complicaçoes e hoje
+		com php7 tem muitos recursos. Hoje é uma linguagem bem robusta
+	+ DESCRIÇAO DO CURSO:
+		A Zend Technologies é atualmente a empresa responsável por manter o
+	core ou coração da Linguagem PHP, seus criadores foram responsáveis pela 
+	criação da versão 3, 4 e da reescrita do Zend Engine 2.0 motor que compões 
+	o PHP 5 em diante. Qual o nome e nacionalidade dos criadores da Zend?
+	
+
+--> PHP 5 E PHP 7
+	+ A partir do php5 tivemos muitas mudanças, hoje ha varias no
+		php 5.3, 5.4, 5.6 
+	+ O PHP 7 adicionou mais recursos e removeu alguns obsoletos
+		mas aprendendo ale aprende o PHP 5. No curso, vao explicar o
+		quando o recurso eh do php 5 ou 7
+	+ A maioria dos servidores ja suportam php7
+	+ PHP É FRACEMENTE TIPADA, ELA É COMO DE PYTHON
+
+--> Certificado Zendi Enginner (PHP)
+	+ O certificado tem peso
+
+	LINKS:
+	+ http://taylorlopes.com/como-obter-sua-certificacao-php-zend/
+	+ https://www.casadocodigo.com.br/products/livro-certificacao-php
+	+ https://imasters.com.br/linguagens/php/
+		como-preparei-para-zcpe-nova-certificacao-php/?trace=1519021197
+
+------------------------------------------------------------------------------------|
+
+	{[ 2. Preparando Ambiente - PHP  e Apache]}
+
+	[ 2.1 Intro a Cliente e Servidor Apache]
+
+--> Servidor Web
+	+ Ao acessar um site, vc é redirecionado a um servidor web, um PC que tem 
+	  um programa que é chamado de servidor Web, no caso, o php eh 
+	  combina muito com o servidor web Apache, que é de codigo aberto
+	  mais utilizado pra ele. Em geral, usamos servidore Linux
+	+ Servidor Web e Lingeuamge sao coisas diferentes
+	+ Para PHP, usamos Apache, para Java, tem o TomCat
+	
+--> Instalando PHP
+	+ A ha duas formas
+		1. Forma manual, instalar so o phph
+		2. Usar instaladores, XAMPP, WAMP, LAMP, Easyphp
+	+ Os instaladores nao sao ruins, pois evitam que voce configure a infra
+		mas, se voce for fazer um deploy, a infraestrutura deve ser feita
+		pela parte da empresa do setor de instalação de servidor
+	+ Usaremos o XAMPP, ele é como um tercerizado, alguem que ajuda a
+		fazer as intalaçaoes neecssarias
+		
+--> Apache
+	+ Arquivo de Configuração do apache, GUARDE BEM ESSE NOME:
+		httpd.conf
+	+ O arquivo de configuraçao do php eh
+		php.ini
+	PORTAS
+	Essas duas portas presisam esta aptas para rodar o servidor Apache
+	+ 80	: http
+	+ 443	: https
+	+ 3306  : Porta padrão para o MySQL
+	+ localhost == 127.0.0.1 (ip
+		+ Que dizer q a sua máquina, isso é intranet. Estou dizendo que o
+			servidor é nessa propria maquina.
+		+ usamos '2 pontos' : para indicar a porta x
+	+ O skype usa por padrao esas portas, voce pode ir em sua configuração
+		eh desbilitar isso
+	+ Pra saber o que roda em cada porta tem o program: cports,
+		ele é bm fácil de usar
+	+ Depois de configurar, coloquei pra rodar na porta 8080
+		entao, vai ser: localhost:8080
+
+	[2.2 IDE vs Editor ]
+
+--> Kit de desenovolvimento, um bom eh o PHPStorm, mas ele é pago
+	porem, tem como pegar carckeado ou com licensa
+	+ DryWeve	+ PHPStorm
+	+ ZendStudio	+ Eclipse
+	==> Tome cuidado pra nao ficar superexpecializado em uma ferramenta
+		e nao ficar expecializado
+
+--> Editores: Melhores para aprender na marra
+	+ VIM		+ Brackets
+	+ Atom		+ Sublime
+	
+--> O apache sera o interpretador do php, pra ler o codigo fonte php e gerar
+	entao o php
+
+
+	[2.3 COMEÇANDO A PROGRAMAR PHP]
+
+	
+--> Onde Colocar o programa:
+	+ É o DOCUMENT ROOT, pasta padrao onde salvar os arquivos
+		Pode até mesmo apagar tudo dela
+	+ Vai ser na pasta:
+		xampp\htdocs
+	+ Mas em algumas intalaçoes pode ser a pasta
+		xampp\www
+	+ Ou na pasta
+		xampp\html_public
+
+	
+--> Dar o Hello World
+
+<?php
+	echo "Hello World";
+?>
+
+--> Por padrao, o apache abre primeiramente o arquvio index.php ou index.html
+
+--> No PHP7, a tag de fechamento foi descontinuada, atnes tinham varias forma
+	<%></%> <script..></script>
+
+--> PHP7: Nao presisa fechar a tag de <?php , desde que o arquvio seja
+
+--> Podemos ver em:
+	http://localhost:8080/newindex.php
+	todo php, e pra fechar é usar a ?>
+
+	[2.4 - Modelo Cliente Servidor]
+
+--> Conceito fundamental para entender por que o php funciona no lado servidor 
+	como tambem o node.js e por que o JS funciona no lado do cliente
+
+--> Eh uma forma diferente de criar um executável, no desenvolvimneto Web, agora 
+	seu código estara num banco de dados
+
+Cliente: é o úsuario
+Servidor: Onde fica no site (é onde intalaremos o Servidor)
+	+ Servidores do PHP: Apache, IS, Nix
+
++ Quando voce busca algo, voce é o cleinte, voce solicita uma informaçao
+	e o google fica servindo 24h. Voce faz um pedido (REQUEST) por algo
+	no caso, para o servidor.
+
++ Quando acessa o servidor, ele faz várias perguntas pra voce, se tem 
+	permiçao, de onde veio e tudo mais..
+
++ (RESPONSE) É quando eu respondo ao usuario
+
++ PHP funciona no lado do servidor, e ele devolver HTML para o Cliente
+	= é como se fosse o cérebro do dono da loja,
+	= O PHP nâo é visto pelo lado do usúario
+	= Ele entende bem O HTML
+
++ Concorrente do PHP: Asp.Net(Microsoft), JSF(Java), Rails(Ruby), Django(Python)
+	+ Em geral, toda linguagem tem sua variaçao para Web
+	+ " No final das contas, o cliente quer ver o problema resolvido"
+	+ " A melhor lingueagem é a que voce sabe usar"
+	+ A parte visual do que o usuario olha é HTML, CSS, JS
+	+ Padroes de COmunicaçao: JSON, XML
+
+------------------------------------------------------------------------------------|
+
+	{[ 3. Git ]}
+
+	[ 3.1 Intro Git]
+
+--> Muito útil controlar as versoes, pra voltar uma versao, pra colaborar
+	em grupos, para OPEN-SOURCE.
+	+ Trabahar de forma mais orgnizada em em Equipe
+
+--> repositorio
+	+ diretorio principal/raiz de um projeto. Clona todo o repositorio
+
+--> git clone [link]
+	+ Eh como baixar o zip e extrai-lo
+	+ Vai baixar o .\git tambem
+	+ ele cria uma pasta com o nome do repositorio e dentro dela coloca
+		todos os arquivos do repositorio
+	+ podemos mudar o nome da pastacolocarmos o nome em seguida
+		$ git clone [link] [name]
+
+--> cmd> mkdir [name_direotry_create]
+
+--> $ git init
+	+ Torna a pasta em um repository com controle de versao
+	+ cria todo o ambiente pra mexer no git
+	+ Cria arquivo hidden, voce pode acessalos por:
+		name-repository\.git
+
+--> $ git add [nameFile.nameExtension]
+	+ O git leva o programa para um Stage Area (uma sala de espera)
+	+ ele esta esta esperando uma confirmaçao (COMMIT), te todas as
+		alteraçoes pra mandar pro servidor remoto (PUSH)
+
+--> $ git add --all
+	+ manda para a stage área todas as confirmçaoes, tanto de arquivos
+		iniciados como apagados
+
+--> $ git commit -m "Por que fez uma alteraçao
+	+ -m vem de mensagem
+	+ mandamos do stage área para a área de commit, falta fazer um PUSH
+
+	[3.2 github - bitbucket]
+
+--> Github
+	+ Rede soscial de códigos de desenvolvedores
+	+ voce pode ajudar até em outros repositorios
+	+ Usado para criar projetos open-source, PÚBLICOS DE GRAÇA
+
+--> BitBucket
+	+ Gratuito até 5 desenvolvedores
+	+ Não é caro
+
+--> GitIgnore
+	+ Serve para ignorar alguns arquivos, asism, quando fizerem um clone
+		ou um commit, os arquivos nao serao mandados/pegados
+	+ voce cria a partir do git bash pelo comando
+		touch .gitignore
+	+ ele fica na pasta raiz
+	+ verifica o que tem no gitignore
+		<bash> cat .gitignore
+
+--> $ git remote add origin [url do projeto]
+	+ serve pra sincronizar com o repositorio remoto, colocar os dados
+		na Stage area para essa url
+	+ coloca o servidor de origin de git aqui
+
+--> $ git config --global user.name "[name]"
+    $ git confi --
+	+ é uma etiqueta para quando fizer um commit
+	+ colocamos global para ser para todos os repositorios
+
+--> $ git config user.name"[name2]"
+	+ Ser para que, a pasta em que esta, colocar como etiqueta um
+		user.name diferente do global, isso so vai valer
+
+--> $ git push origin master
+	+ Empuraar as informaçaoes para o servidor, COMPARTILHALO
+	+ Para fazelo, tem que ter feito um commit
+	+ em vez de master, pode ser sua branch		
+	+ por padrao colocamos master
+	
+--> $ git pull origin master
+	+ Serve pra pegar as coisas do repositorio
+	+ eh sempre bom fazer um pull antes de commit ou push
+
+--> $ git status
+	+ ve o que esta no Stage Area para commit
+
+WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	O repositorio que voce tem no gitHub, tem que ter o mesmo
+	nome da pasta que voce tem localmente, sem isos, da problema 
+	em fazer push e pull, por que nao reconhece como sendo coisas iguais
+
+	Uma forma de passar por cima disso eh fazerndo um psu ou pull forçado
+		git push -f origin <branch>
+	Com isso, deu pra fazer o push sem problema
+
+EXTRA
++ git remote
+	lista cada remoto
++ git remote -v
+	mostra as urls
+Anotações Pessoais:
+	DUVIDAS
+		+ A pasta de repositorio deve ser de mesmo nome que
+			a do gitHub
+		+ git config --list
+		+ git status
+		+ git --help
+		
+	1. A primeira coisa eh criar o repositorio no git e fazer o clone
+		pra vir o basico como README e \.git
+		+ git clone [link]
+	2. Entre na pasta que foi criada
+		+ cd
+	2. Depois,  inseria arquvios E FAZ
+		+ git add --all
+	3. Depois confirmar isso mesmo
+		+ git commit -m "message"
+	4. Push, pra jogar pro remoto
+		+ git push origin [master/branch_rafael]
+
+	[Resolver problemas de diferenças de versos do local/remoto]
+
+--> $ git pull origin [master/your_branch]
+	+ Traz tudo da origin [o remote que adicionamentos antes] pra local
+	+ Assim leva do remote-->local , UPDATE!
+
+	[quando local != remote]
+
+SIMULAÇAO
+	+ Edita o do github
+	+ Edita difetene no local (same line)
+	+ tenta fazer um push, nao vai dar certo, vai indicar que esta
+		diferente, entao, vai pedir um pull
+	+ AO fazer o pull,vai dar conflito, ppis esta diferente o de fora
+		com o seu no mesmo aruqivo na mesma liha
+	+ Ele vai dar um Conlitct, e , sera necessario mexer no codigo pra 
+		ficar forma que esta lá
+
+--> $ git add -A 
+	Adiciona toda alteração, novas informações e exclusão que tenha 
+	ocorrido, esse é o --All
+
+--> $ git add . 
+	Adiciona apenas novas informações e informações alteradas, não adiciona 
+	as exclusões de código realizada.
+
+--> $ git add -u 
+	Adiciona apenas informações alteradas e excluídas, não adiciona novas 
+	informações.
+
+--------------------------------------------------------------------------------|
+
+	{[ 4. Iniciando em PHP - Progamaçao]}
+
+	[4.1 - Variaveis]
+
+--> Sao declaradas com o sinal de dolar sifrao $
+	Ex: $nome = "HCode";
+	
+--> Como dito antes, PHP é FRACAMENTE TIPADA, entao, nao presisamos
+	declara o tipo dela. a variavel ocupa mais ou menos espaço de acordo
+	com o que for declarado pra ele, é como uma caixa
+
+--> Apesar disso, podemos declarar o tipo para a variavel, como:
+	String $nome = "hcode";
+	Aí, essa varaivel so poderar armazenar String
+
+--> function: var_dump([var])
+	Ex: var_dump($nome)
+	+ Mostra o tipo do dado, o tamanho e o que ele é dessa variavel
+
+	[4.2 - Tipo de dados no php]
+
+REGRA DE NOME DE VARIAVEL
+	+ Recomenda-se Camiel Cses, que eh comoeçar o nome da varaivel
+		em minusuculo, e, se for composta, a 1 letra Maiusculo
+	+ PHP  é caseSensitive, ele vai diferentciar Maiusculo
+	+ Uma variavel nao aceita começar com numero, so no meio ou fim
+	+ De caracteres especiais, usamos so o underline
+	+ Existem nomes reservados, se voce usar, vai sobreescrever o outro,
+		voce pode exlcuir entao caso precisar
+
+COMENTARIOS
+	//	- Comentario de Linha
+	/* */	- Comentario em Bloco
+	+ Existe um padrao de comentarios, pode-se pesquisar em
+		https://www.phpdoc.org/
+
+PHP e HTML
+	+ O PHP manipula o HTML, quando agente faz um echo, agente ta mostrando
+		texto em html, por isso, podemos usar as tags de HTML no echo
+		com <br/>
+
+--> function: unset($var1, $var2,...)
+	+ Serve para tirar da memoria, pode por uma lsita de varaiveis
+
+--> function: isset($var1)
+	+ Retorna true/false pra caso a variavel existir mesmo na memoria ou nao
+
+--> function: exit;
+	+ Serve para o php parar de executar desas liha pra baixo
+
+--> function concatenaçao: $var1 . $var2
+	+ usa ponto entre as variaveis, nao presisa dar esse espaço
+	+ O PHP converte e junta esses tipos, eh recomendado colocar um  " " entre
+
+TIPOS DE DADOS - BASICO
+	+ Inteiro	+ Bolleano
+	+ Numerico	+ Ponto Flutuante
+
+TIPOS DE DADOS - COMPOSOTS
+	+ Array		+ Objeto
+
+TIPOS DE DADOS - Especais
+	+ resource	+ null
+
+DECLARAÇÃO
+	+ String:	$site = "www.gcode.com";
+	+ Integer	$ano = 1990;
+	+ Float		$salario = 555.99;
+	+ Bollean	$bloqueado = true; //nao aparece no echo, so no var_dump
+	+ ARRAY
+	$frutas = array("abacaxi", "laranja", "manga",);
+	echo $frutas[2];
+	OBJETO
+	+ $nascimento = new DateTime();
+	+ RESOURCE
+	$arquivo = fopen("exemplo-01.php", "r");
+	+ NULL
+	$nulo = NULL;
+	
+	[4.3 Variaveis Pre-definidas]
+
+--> Sao varaiveis que ja tem alguns recursos como do ambiente ou pra pegar
+	cisas externas
+
+--> Varaiveis Super Globais
+	+ nao presais colcoar o global pra velas
+	+ Costumam começar com $_, como voce deve ter percebido, toda
+		variavei eh escrtia começando com $
+	Exemplo: $_GET
+	+ Na URL, a ? serve pra setpara e indicar as variaveis que estao sendo
+		passadas
+	+ Para acessar os valores de $_GET, eh necesario passalos na url
+		entao, fazemos isso pondo
+		http://localhost:8080/variaveis/exemplo3.php?a=456
+		$nome = (int) $_GET["a"];
+	+ Estamos dizendo que a variavei a do _GET tem valor de 456
+	+ TODA DADO QUE VINHER POR GET OU POST SERA STRING, entao, eh
+		necesario mudar o tipo, usamos entao um cast
+		URL
+	+ A URL muitas vezes eh grande por que nela tem varias variaveis,
+	+ URI: Partes da URL que identificam alguma coisa
+	+ Geralmente começar por
+		+ protocolo : http, https, ftp
+		+ dominio:
+		+ path
+		+ queryString : paramentros de entrada
+
+$_SERVER
+	+ $ip = $_SERVER["REMOTE_ADDR"];
+	+ echo $ip;
+		--> Mostra o pi de quem esta acessadno remoto
+	+ $ip = $_SERVER["SCRIPT_NAME"];
+	+ echo $ip;
+		--> Mostra que arquivo do seu server eta sendo acessado
+	
+	[3.4 - Escopo de variavel]
+
+--> Significa até que ponto sua variavel sera escutada/vista
+
+--> As variaveis de que criamos sao de escopop local, so sao visto no arq
+
+--> Os escopos do arqui sao as funçoes delimitadas por CHAVES, DIFERENTE
+	DO JAVA, AS VARAIVEIS CRIADAS NAO SAO VISTAS NAS  FUNÇOES
+	EX, isso nao funciona
+
+		$nome = "Galcuio";
+		function teste(){
+			echo $nome;
+		}
+	PRA FAZER FUNCIONAR, PRA FUNÇAO VER A VARAIVEL, TEMOS QUUE COLOCAR
+	que ela é gloval, assim:
+		$nome = "Galcuio";
+		function teste(){
+			global $nome;
+			echo $nome;
+		}
+	+ Com global, ele entede que é a variavel do escopo de fora
+
+	[4.5 - Operadores em PHP]
+
+OPERADORES DE ATRIBUIÇAO
+	= eh a atribuião
+	. eh a concatenaçao
+	.= eh a concatenaçao e depois a atribuiçao no fim
+	+ e existe o +=
+	- e existe o -=
+	* e existe o *=
+	
+OPERADORES ARITMETICOS
+	(Soma +)	(Mult *)	(Modulo %)
+	(Sub  -)	(Divi /)	(Exp	**)
+
+OPERADORES DE COMPARAÇAO
+	+ Sao operadores que retornam booleano
+	(Maior >)	
+	(Menor <)	
+	(Diferente !=)
+	(Diferença de Identidade !==)
+	(Igualadade de valor ==) 
+		Compara somente valor
+	(Igualdade de Identidade ===) 
+		Compara valor e tipo, se os 2 sao iguais nesse quesitos
+	EX:
+	$a = 55.0;
+	$b = 55;
+
+	var_dump($a == $b);	//retorna true, eh mesmo valor
+
+	echo "<br>";
+
+	var_dump($a === $b); 	//retorna false por um eh float, o  outro eh int
+	
+
+OPERADORES NOVOS DO PHP7
+
+	OPERADOR SPACESHIP ('<=>')
+		+ Tem esse nome por conta de seu simbolo
+		+ retorna -1/0/1 indicando se uma var eh menro/igual/maior que a 
+			a outra e retorna como um int
+	EX: 
+		$c = 50;
+		$d = 35;
+		var_dump($c <=> $d);
+		// Sejam $var1 <=> $var2, teremos:
+		/*
+			1  --> se var1 > var2 == var2,var1
+			-1 --> se var2 > var1 == var1,var2
+			0  --> se sao iguais
+		*/
+
+	OPERADOR NULLCOLECTION
+		+ é como um escolhedor, ele vaerifica se os valores sao nulos ou
+	nao, e caso forem, passam pra diante. Ele é interresante poir evitraia
+	assim ter muitos ifs
+		+ Ele retorna a primeira variavel que encontrar na sequencia
+	que NAO é NULA
+
+	EX:
+		$a = NULL;
+		$b = null;
+		$c = 10;
+		echo $a ?? $b ?? $c;
+		// vai mostra $c (10), pois, ele pergunta se $a eh null, se for
+			ele passa pra $b, se nao,  pega o valor de $a
+			Assim, retorna $c pois $a e $b sao nullos
+
+OPERADORES DE INCREMENTO(++) DECREMENTO (--)
+	$var++ -> Incrementa APOS executar a linha
+	++$var -> Incrementa ANTES de executar a linha
+
+PRECEDENCIA DE OPERADORES
+	+ So usa parentesis nessa precedencia
+	+ DOC: http://php.net/manual/pt_BR/language.operators.php
+	
+OPERADORES LOGICOS
+	AND (&&)	OR  (||)	
+	NOT (!)		XOR (xor)
+
+	[4.6 - String]
+
+--> DIFERENÇA DE ASPAS SIMPLES E DUPLAS
+	+ As duas mostra em string, seja: $nome = "nome Digitado";
+	SIMPLES
+		+ entende que tudo que esta dentro eh texto
+		+ entao: echo 'ABC $nome' ==> "ABC $nome"
+	DUPLAS
+		+ ele buca se tem uma variavel
+		+ entao: echo "ABC $nome" ==> "ABC nome Digitado"
+		+ Essa tecnica eh interpolaçao de variavel. Em geral, usamos
+			aspas duplas por padrao mesmo, mas, quando quisermos o nome
+			fda variavel, usaremos a simples
+
+--> Algumas Funçoes de String
+
+--> function : strtoupper($var_string)
+	+ Deixa a String em maiusculo
+
+--> function : strtolower($var_string)
+	+ Deixa a String em minusculo
+
+--> function : ucfirst($var_string)
+	+ Deixa somente a primeira letra da String em maiusuclo
+
+--> function : ucwords($var_string)
+	+ Deixa cada primeira palavra da String em maiuxulo
+	
+--> function : str_repalce(string_search, string_replace, var)
+	+ troca uma sub string de var por outra
+	EXEMPLO
+		$nome1 = "estou codificando alguma coisa aqui";
+		$new_name = str_replace("o", "112", $nome1);
+
+
+--> function : strpos($var, "string_procurada"
+	+ retorna um int co a posicaço em que começa esaa palavra procuarada
+	+ retorna false se nao a acher
+	$frase = "A repetiçao é a mãe da retenaçao";
+	$q = strpos($frase, "mãe");
+	var_dump($q);
+
+--> function : substr($var, int(inicio), int(fim))
+	+ Serve para retornar uma suba string de $var, sera a partir de
+		inicio a fim definidos nos param da funçao
+	
+--> function : subtr($var_string, int(pega apartir daqui))
+	+ Deixa a String em minusculo
+
+--> function : strlen($var_string)
+	+ Retorna o int que representa o tamnaho da string
+
+--> DOC: link para mais funçoes de String
+	http://php.net/manual/pt_BR/ref.strings.php
+
+	[4.7 - Arquivos]
+
+--> include e require
+	+ A partir de ele, podemos adicionar codigos para serem lidos
+		para todaos os arquivos, como algo padrao
+	+ é como o import
+	+ Ex: ter um arquvio de funçao pra colocar todas as funçoes la
+		semelhante aos projetos de html, do layout
+
+--> include
+	+ pasta escrever include e o arquivo com extensao, antes de chamar
+		as funções:
+		--> include "exemplo-01.php"
+	+ PROBLEMA1: Se o arquvio incluido tiver erro, ao executar, vai dar erro
+		na linha do include, mas nao sera o arquivo que mandou, e sim
+		o que esta sendo incluido, na maioria dos casos
+	+ PROBLEMA2: caminho do diretorio
+		+ "..\inc\exemplo.php" - sobe num dir e entra no inc
+	+ Tenta funcionar mesmo se o arquivo nao existir, e tenta tambem procurar
+		em outros diretorios para vê se acha esse código. Ele tambem possui
+		mais funcionalidades
+	+ include tambem permite trazer de um site, include dinamico que é uma
+		pessima pratica
+
+--> require
+	+ Obriga que o arquivo exista e que esteja funcionannco corretamnete
+	+ É melhor usar o require
+	Ex: require "exemplo-01.php"
+	    require "..\inc\exemplo.php"
+		
+--> require once e include once
+	+ Pra evitar loops infinitos de fazer um include de um arquvio que faz um
+		include de outro, que chamaria outro e assim indefinidamente.
+	  Podemos entao usar o require/include once pra so importar uma única vez
+	+ Apesar de estranho, há mesmo a possibilidade de isso ocorrer
+	+ Sem isso, pode ocorrer erro de ter de um include chamar outro que tenha
+		os mesmos nome de funçao, com o once, so chama o primeiero e o
+		segundo passa desperceido
+
+--> PHP7
+	+ O require antes da um erro falta, no PHP7, nao há mais erros fatais,
+		eles serao tratados por try/catch
+		
+------------------------------------------------------------------------------------|
+	{[5. PHP++ Estuturas de Decisao e Repetição]}
+
+	[5.1 - Decisão IF]
+
+--> Semelhante a Java, da mesma forma há if, else if e else.
+
+--> Há tambem o operador ternario 
+	(condiçao) : retorno_qnd_true : return_qnd_false;
+
+	$a = 70;
+	$b = 40;
+	$c = 80;
+	if($a < $b){
+		echo "b = $b<br>";
+	}else if($a > $c){
+		echo "a = $a<br>";
+	}else{
+		echo "a = $a -- b = $b<br>";
+	}
+
+	//Operador Ternario (condiçao) : return of true : return of false
+	echo ($c < $b) ? "c eh menor que b" : "c eh maior que b";
+
+
+	[5.2 - Decisão SWITH]
+
+--> No swith, eu ja sei quais as opçoes vao vir, ele eh como o if com igualade
+	para varios valores
+
+--> Sem o break ele executa as proximas instuçoes
+
+EXEMPLO:
+
+	switch ($diaSemana) {
+	case 0:
+		echo "Domingo";
+		break;
+	case 1:
+		echo "Segunda";
+		break;
+	default:
+		echo "Algum dia";
+}
+
+	[5.3 Repetição - FOR]
+
+--> Igual ao java, se for executar so uma instruçao, entao pode deixar
+	na mesma linha com, da mesma coisa ocorre com o if
+
+EXEMPLO:
+	for($i = 0; $i < 10; $i++){
+		echo "i = $i<br>";
+	}
+
+--> instruçao continue: serve para ignorar tudo que esta embaixo da intruçao, e
+	assim, voltar para o for
+
+EXEMPLO:  De 5 a 7 nao vai imprimir
+	for($i = 0; $i < 10; $i++){
+		if($i > 4 && $i < 8) continue;
+		echo "i = $i<br>";
+	}
+
+
+--> break: sai do for como em java
+
+--> DICA SUBLIME: escreva : for + TAB que gera automaticamente
+
+	[5.4 - Repetição FOREACH]
+
+--> Serve para percorre Array(exmplo 1) e Coleçõe(exemplo2)
+
+--> Esturura:
+	foreach ($var as $index => $nome_each){}
+
+EXEMPLO 1:
+<?php 
+	//foreach: em array ou colection
+
+	$meses = array(
+		"janeiro", "fevereito", "março",
+		"abril", "maio", "junho",
+		"julho", "agosto", "setembro",
+		"outrubor", "novemnro", "dezemdbro"
+	);
+
+	foreach ($meses as $index => $mes) {
+		
+		echo "Indice: $index  ";
+		echo "O mes eh $mes<br><br>";
+	}
+
+	echo "<br>";
+
+	foreach ($meses as $variable) {
+		echo "$variable --";
+	}
+
+
+ ?>
+
+EXEMPLO 2:
+<form>
+	<!-- Input de campos pra digitar Texto -->
+	<input type="text" name="nome">
+	<!-- input de campo de dada -->
+	<input type="date" name="nacimento">
+	<!-- butao de enviar -->
+	<input type="submit" name="OK">
+</form>
+
+<?php 
+	if (isset($_GET)) {
+		# O $_get em vez de index inteiro, ele tem um index de String
+		foreach ($_GET as $key => $value) {
+			echo "nome do campo : $key<br>";
+			echo "valor do campo: $value <br><br>";
+		}
+	}
+
+ ?>
+
+	[5.5 Repetição While e DoWhile]
+
+--> enquanto for verdade, vai executar, tem mesma estrutura
+
+Exemplo Dowhile
+$total = 100;
+$desconto = 0.9;
+do{
+	$total = $total * $desconto;
+
+} while ($total > 10);
+echo "$total";
+
+Exemplo While
+$cond = true;
+
+while ($cond) {
+
+	echo "<br>";
+	$numero = rand(1, 10);
+
+	if($numero === 3){
+		echo "TRES";
+		$cond = false;
+	}
+	
+}
+
+------------------------------------------------------------------------------------|
+
+	{[6. Arrays em PHP]{
+
+	[6.1 Array]
+
+--> Array quando tem uma dimensao é chamado de unidirecional ou vetor
+
+--> Diferente do que ocore em Java, em php o index pode sim ser uma "String"
+
+--> Inicializar Array: funciton array
+	+ Permite inicializar de forma sequencial
+	Ex:
+	$frutas = array("laranja", "abacaxi", "melancia");
+
+--> Inicializar array : Um por um
+	+ Como php é fracmente tipado, ele aloca esses espaços, entao
+		nem presias declaralos com antecedencia.
+	$carros[0][0] = "GM";
+	$carros[0][1] = "Cobalt";
+	$carros[1][0] = "Ford";
+	$carros[1][1] = "Fiesta";
+
+--> function : end($var_array)
+	+ Retorna o ultimo elementod de um array
+
+--> function : print_r($var_array)
+	+ Mostra a estrutura do array passado
+
+Adicionado em um array ja criado:
+
+--> function : array_push( $var_array_q_vai_receber, [array_a_ser_inserido])
+	EX:
+	$pessoas = array();
+
+	array_push($pessoas, array(
+		"nome" => "Joao",
+		"idade" => "60",
+	));
+
+
+	array_push($pessoas, array(
+		"nome" => "Silver",
+		"idade" => "90",
+	));
+	
+	echo "<br>";
+	echo $pessoas[1]["nome"];
+	/*
+	Array ( 
+		[0] => Array ( [nome] => Joao [idade] => 60 )
+	 	[1] => Array ( [nome] => Silver [idade] => 90 )
+	*/
+
+
+	[6.2 - JSON]
+
+--> JavaScript Object Notation: (/jeizon), antes o mais utilizado era o XML, mas
+	como o xml tinha que abrir mua tag, gastava mais espaços
+
+--> Vamos fazer JSON encode e decode
+
+--> function : json_encode($pessoas);
+
+EXEMPLO
+$pessoas = array();
+
+array_push($pessoas, array(
+	"nome" => "Joao",
+	"idade" => 60,
+));
+echo json_encode($pessoas);
+
+--> function : json_decode($var_with_json_string, boolean)
+	+ decodifica var_with para json e joga
+	+ nao eh possivel dar um echo no json, apenas o var_dump
+	+ o boolean: se true ==> mostra os objetos interiores como um array
+		se false, mostra como objeto json
+
+EXEMPLO
+	$json_arq = '[{"nome":"Joao","idade":60},{"nome":"Silver","idade":90}]';
+	$data = json_decode($json_arq, true);
+	var_dump($data);
+
+	[6.3 - Constantes]
+
+--> Utilizadas quando nao presisa mudar o valor
+
+--> Em php7, temos arrays constantes
+
+--> function : define("NOME-MAIUSCULO", VALOR)
+	+ podemos determinar se ela eh caseSensitve ou nao
+	+ Em geral, deixamos constates com letras maiursculas
+	EXEMPLO:
+		define("SERVIDOR", "127.0.0.1");
+		echo SERVIDOR;
+
+--> ARRAYS DE CONSTATNES - PHP7
+	+ EM PHP7, pode-se criar um array que seja constante, antes isso nao
+		era possivel, usava-se um array com cada elemento sendo uma cte
+	EXMPLO:
+		define("SERVIDOR_NAME", ["127.0.01", "root", "4", 8]);
+		print_r(SERVIDOR_NAME);
+		var_dump(SERVIDOR_NAME);
+	+ Para deixar case sesitive, coloca mais um paramentro boolean : true
+
+--> CONSTANTES DO PHP
+	echo PHP_VERSION;
+	echo DIRECTORY_SEPARATOR;
+
+--> link : constantes pre-definidas
+	https://secure.php.net/manual/pt_BR/reserved.constants.php
+
+
+	[6.4 Sessao em PHP7]
+
+--> Variaveis local so funciona nas pagina em que é criada ou se ela vem
+	de um include/require.
+
+--> Varaivel de Seesao: ela é super global e pode ser acesada enquanto o
+	usuario estiver na sessao
+
+--> Quando voce entra num site, eh criado uma sessao,e ela pode ser deleta
+	por programaçao, envolve muito a parte da seguranaça.
+
+--> Pra falar que voce vai usar funçao no site, eh necesasrio usar a funçao
+	function : session_star(); no inicio do boloc php
+
+--> Voce pode definir pra que se comece uma sessao sempre por padrao, basta
+	ir e procurar no php.init
+
+--> Ao dar session_start(), temos que criar as variaveis no $_SESSION, assim
+	fariamos da seguinte maneira:
+	EXEMPLO PG1:
+	<?php 
+		session_start();
+		$_SESSION["nome"] = "Hcode";
+	?>
+	EXEMPLO PG2:
+	<?php 
+		session_start();
+		echo $_SESSION["nome"] ;
+	 ?>
+	
+--> podeos tambem destruir uma variavel de sessao com:
+	function : session_unset($_SESSION["nome"]);
+	+ limpa a varaivel de sessao, mas, para o site, voce contrinua la
+	+ se eu colocar session_unsert(), sem pram, limpa todas as variaveis
+
+--> function : session_destroy()
+	+ ele e limpara a variavel e destrtoi o usuario
+
+ARQUIVO CONFIG.PHP
+--> Criamos um arquivo "config.php" que tera configuraçoes coomo dar o 
+	session_start alem de podermos colocar muitas outras, como:
+	Tratamento de erros, local(pais de onde vem)
+
+	[6.5 - Id DE SESSAO]
+
+--> Identificaçao única da sessao de um cliente, adda pelo servidor
+
+--> Hoje existe cookies e outras ferramentas que guardam sessoes ofline
+
+--> function :session_id()
+	+ retorna o id da sessao aberta (uma crazy string)
+
+--> function : session_regenerate_id();
+	+ força criar um id pra a sessao
+	+ usado pra gerar uma nova sesao apos alguma validaçao, isso 
+		serve como seguraça
+
+--> Usa-se muito session em php
+
+	[6.6 Funçoes para Session]
+
+--> DOC: explicando sessoes e suas funçoes
+	http://php.net/manual/pt_BR/book.session.php
+
+--> function : session_save_path()
+	+ mostra o caminho de onde esta essa sessao
+	+ retorna uma string do dir de onde ela esta C:\xampp\tmp
+
+--> funciotn : session_status()
+	+
+
+EXEMPLO:
+<?php 
+	require_once("config.php");
+
+	echo session_save_path();
+
+	echo "<br>";
+
+	var_dump(session_status());
+
+	echo "<br>";
+
+	switch (session_status()) {
+		case PHP_SESSION_DISABLED:
+		echo "session esta desbilidatada";
+		break;
+		case PHP_SESSION_NONE:
+		echo " as sessões estiverem habilitadas, mas nenhuma existir.";
+		break;
+		case PHP_SESSION_ACTIVE:
+		echo "as sessões estiverem habilitadas, e uma existir.";
+		break;
+	}
+ ?>
+
+------------------------------------------------------------------------------------|
+
+	{[ 7. Funçao  em PHP]}
+
+	[7.1 - Função]
+
+--> Funçao que nao retorna nada eh uma subrotina, uma funçao que retorna algo
+	ai é uma funçao.
+
+--> Diferente de Java, nao presisa declara o tipo de retorno
+
+Eexemplo:
+
+<?php 
+	function nome_function(){
+		echo "Ola Mundo";
+		return "retorno";
+	}
+	$var = nome_function();
+	echo "<br>$var";
+ ?>
+
+	[7.2 - Parametros / Argumento]
+
+--> Funçoes podem ter valor padrao, eles serao usadaos quando nao for passado
+	seu argumento correspondente.
+	EX:
+	function segunda_function($texto = "Yorkshire"){
+		return "Acompany On! $texto";
+	}
+	segunda_function(); //Imprime YorkShire, pois, nao passou param
+
+--> WARNING! Se voce fizer isso, tome cuidado:
+	PONHA OS PARAMTEROS OBRIGATORIOS À ESQUERDA,
+	E A DIREITA DEIXE OS PARAMETROS COM VALOR DEFAULT
+    Isso por que, se voce, A ORDEM DE PARAM QUETEM QUE SER A MESMA
+    DA FUNÇAO. SE VOE TIVER UM PARAMETRO OBRIGATORIO, ELE TEM QUE SER PASSADO
+    NA CHAMADA
+	EX1:
+	function quarta_function($txt1, $txt2 = "override"){
+		return "$txt1 + $txt2 <br/>";
+	}
+	POSSO CHAMAR:
+	echo quarta_function("world");
+	echo quarta_function("world", "super");
+	+ Mas nao tem como eu chamar pra txt2, alem disso,
+
+	EX: 2
+	function terceira_function($txt1 = "inicio", $txt2 = "fim", $city){
+		return "$txt1 $city $txt2 $city <br>";
+	}
+	//NAO FUNCIONA
+
+--> function : func_get_args();
+	+ Funçao muito poderosa, serve para recolher em um array todos os
+		paramertros passado na funçao
+	+ Dessa forma, faser sobrecarga em PHP fica mais fácil e DIFERETENTE
+		do que em Java. Com essa funçao, posso fazr uma infinidade
+		de coisas com APENAS UMA unica função.
+
+	[7.3 - Passagem por valor e referencia]
+
+--> A passagem que costumamaos passar eh por valor
+
+--> Passagem pro referecenia:
+	+ vou te mandar uma variavel e quando for chamala vai esta se referendo
+		a variavel de fora, onde ela mora
+	+ Eh usado o e comercial & 
+	+ &$var ==> passagem de parametro pro referencia
+	+ Usada muito em foreach para arrays
+
+	EXEMPLO:
+	$pessoas = array("nome" => "joao", "idade" => " 20");
+
+	foreach ($pessoas as $key => &$value) {
+		if(gettype($value) === 'integer')
+			$value += 10;
+		echo "<br>";
+	}
+	// Perceba que o value esta como referencia, por isso, vai modificar
+		o array quando cehgar nele e ver que seu valor mesmo eh int
+
+	[7.4 - Funçoes em PHP7]
+
+--> 1. Decalraçao de tipos excalares nos parametros
+	+ Pode-se determinar o tipo de param (...)
+	+ COMO usar, ([tipo] ... [$var_que_ficara_o_array]
+		Dessa forma, os paramteros ficaram no array que foi
+		declarado no inicio.
+	EX:
+	function soma(int ... $valores){
+		return array_sum($valores);
+	}
+
+	echo "<br>";
+	echo soma(2, 2);
+	echo "<br>";
+	echo soma(4,5,6,7,7);
+
+--> function : array_sum($var_array)
+	+ Soma os valores que estao dentro de um array
+
+--> 2. Declaração de tipo de retorno
+	+ Útil para usar com '===='
+	+ Como Fazer: colocar ':' na frente da sua declaraçao e seu tipo
+	+ Com isso, o que sair ser desse tipo
+	EX:
+	function soma(int ... $valores) : float{
+		return array_sum($valores);
+	}
+
+	[7.5 -Funçoes Recursivas]
+
+--> Usa-se so em situaçoes exepcionais, tem um exemplo
+
+	[7.6 - Função Anonima]
+
+--> Funçoes Anonima nao tem nome nem retorno, e podem ser chamdads dentro da
+	varaiveç
+
+
+EXEMPLO 1:
+<?php 
+	//funçao anonima, muito usada em JS, nao em retorno nem nome
+
+	function test($callback){
+		//Processo Lento
+		// Execeuta função dessa variavel que sera uma funçao
+		$callback();
+	}
+
+	//Passamos uma função como parâmetro
+	test(function(){
+		echo "terminou";
+	});
+
+	
+ ?>
+
+
+EXEMPLO:2
+<?php 
+
+	$fn = function($a){
+		var_dump($a);
+	};
+
+	$fn("Oi");
+
+ ?>
+
+
+	[7.7. Data e Hora]
+
+--> Data é dependente do local (Fuso Horário), e isso faz a diferença
+
+--> TimeStamp : Eh a quantidade de segundos desde 01/01/1970, se voce quiser uma
+	data menor que isso, devera usar um numero negativo, pois ele é apenas o
+	marco zero de contagem
+
+--> function : date(argFormat, argTimeStamp) : string
+	+ o arg1 eh o tipo de saida que deve ser : Ex "d/m/Y"
+	+ o arg2 eh opcional, eh um timestamp, se nao for informado, pegara o atual
+
+--> function : stringtotime(argstring) : string
+	+ COnveter uma string para um time_stamp
+	EXEMPLO:
+	$ts = strtotime("2001-09-01"); // 999295200
+
+	[7.8. Set_locale]
+
+--> Nessa parte, eh bom dar olhada na documentaçao
+
+--> Muda os parametro de local usados no servidor
+	
+--> function : setlocale(LC_ALL, "pt_BR", "pt_BR.utf-8", "portuguese");
+	+ Muda para ortugeues para 3 SOs diferetens
+	+Exemplo de Saida
+	echo strftime(" %A %B");
+
+	[7.9. Classe DateTime]
+
+--> 
+	EXEMPLO: 
+	$dt = new DateTime();
+	echo $dt->format("d/m/Y");
+
+------------------------------------------------------------------------------------|
+
+	[{8. PHP - Orientado a Objeto}]
+
+--> Um objeto é uma variavel que representa uma clase, ao intanciala com o
+	new, voce esta a criando. É feita de atributos e métodos. é um molde
+	e pra isso, cria-se uma varaivel que é sua instancia (Sua copia real)
+
+	[8.1. Criando uma classe]
+
+--> Primeira Letra Maiuscula CamielCase.
+	+ O acesso a um atributo dentro do metodo usa-se $tis->atr
+	+ Tem modificadores de acesso
+
+	EXEMPLO:
+	<?php 
+	class Pessoa{
+
+	// Craindo Atributo
+	public $nome;
+
+	// Criando um metodo
+	public function falar(){
+		// Tem que escrever o $this-> pra pegar o atributo dentro do metodo,
+		// $this eh uma var interna e serve pra isso
+		return "O meu nome eh ".$this->nome;
+	}
+}
+
+$glaucio = new Pessoa();
+$glaucio->nome = "glaucio Daniel";
+echo $glaucio->falar();
+?>
+
+--> GETTER E SETTERS
+
+	public function getModelo(){
+		return $this->modelo;
+	}
+
+	public function setModelo($modelo){
+		$this->modelo = $modelo;
+	}
+
+--> Cast na saida : EM PHP as varaiveis nao tem tipo, porem, podemos especificar
+	para que na saida de um get, retorne em um certo tipo.
+	Exempl: se eu tneho nao e eu uqero que retonre em inteiro, entoa eu
+	usaria isso
+	+ PHP 7
+	public function getAno():int{ //code }
+	+ Useo para fazer cast na saida, nao apenas pra saber o que sera retornando
+
+	[8.2 Métodos Estáticos]
+
+--> Tem o mesmo funcionamento do método statico em java, basta colocar a keyword
+	static antes da sua definição:
+	EXEMPLO:
+	public static function validarCPF($cpf) { [code] }
+
+--> Chamada de Método Statico
+	+ Usamos dois ponto '::'
+	EXEMPLO:
+	Documento::validarCPF("04638784500")
+	
+
+	[8.3 Métodos Mágicos]
+
+--> Métodos Mágicos : São coisa que acontencem fora da sua vista.
+	+ É por exemplo definir métodos para criaçao e detruição de objetos
+	+ Um exemplo é o método construtor
+	+ Todos os métodos mágicos começa com dois underlines
+	+ Hoje, no php7 esta em desuso criar o metodo construtor com o nome
+		da classe, hoje, estao mais usando o método masgico
+		'__contructor'
+
+	EXEMPLO: __construct
+		+ Chamado quando o objeto for criado
+	public function __construct($logadouro, $numero, $cidade){
+			$this->logadouro = $logadouro;
+			$this->numero = $numero;
+			$this->cidade = $cidade;
+		}
+
+	EXEMPLO: __destruct
+		+ Executado quando o objeto for destruido da memória, isso ocore
+	quando muda de página, ou usamo unset no ubjeto (para deletalo).
+	public function __destruct(){
+			var_dump("DESTRUIR");
+	}
+
+	EXEMPLO : __toString()
+
+--> Não deve-se ter funções com esses nomes em nenhuma de suas classes a não ser que
+	queira a funcionalidade mágica associada a eles
+
+	
+--> Lista de métodos Mágicos:
+	__autoload()
+	__construct()
+	__destruct()
+	__call()
+	__callStatic()
+	__sleep()
+	__wakeup()
+	__toString()
+	__invoke()
+	__isset()
+	__unset()
+	__set_state()
+	__clone()
+	__degubInfo()
+
+	[8.4 Encapsulamento]
+
+--> Encapsulamneto : que pode acessar, e usamos os modificadores de acesso
+	+ Quand bem utilizado, protege as infromações
+	+ Esse modificadores influenciam na herança
+	+ funciona da mesma forma que no Java
+	- private	- protected
+	- public	- static
+
+--> WARNING! SUTILEZA : PRIVATE X PROTECTED
+	+ Considere o seguinte Caso
+	1. Um class1 tem arg1 como protected e arg2 como private
+	2. class2 extends class1
+	+ Conclusão : class2 consegue acessar o protected mas nao o private!
+	+ Quando dizemos acessar, significa que é referenciá-lo dentro da class2
+	+ Porem, se executarmos um metodo que veio de herança de class1 em class2
+		que chama arg2, EXECUTARA, pois, o metodoVEIO de class1 que pode 
+		enchergá-lo.
+	+ Da mesma forma acontece com getter e setters, se um atr for private, e ele
+		for herdado, a outra classe o tera  mas nao podera ser vista por ele
+		- Para realizar seu acessao, temos que chamar o getter/setter da 
+		classe pai que devem ser publico, senão, nao tem como
+	
+--> WARNING! SUTILIZA IMPLICAÇÃO
+	+ Como definimo sempre os atributos como private, se um uma classe extends
+		de outro, entao, para acessar os atr que vinherem de herança
+		temo que usar os getters/setters
+	
+--> function : get_class($var) : String
+	+ retorna no noem da classe em que se está
+
+--> Usamos Getter e Setter para
+	+ Organizar escrita
+	+ Poder colocar RN ao pegar ou inserir dados
+
+	[8.5 Herança]
+
+--> Usamos a keyword extends, e funciona da mesma forma que Java
+
+--> Eh bom organizar hierarquia de classe, isso deixa mais legível, organizado
+	enfim, será bem melhor do que deixar tudo em uma classe
+
+--> Herança serve para generalizar ou especializar classe semelhantes
+
+--> O filho acessa o pai, mas pai nao acessa o filho
+
+	[8.6 Interface]
+
+--> Interface define padrões, é um contrato com a classe 
+
+	+ Eh geralmente o Gerente Senior que manda quem usa quais interfaces
+	+ Isso é bem relacionado ao uso de API externas, ao usálas termos que
+		implementar algumas interfaces. A intergraçao de códigos de 3
+	+ Serve para definir padrões, cria um elo que obriga a ter certos métodos
+	+ A linguagem so permite rodar com os métodos implementados
+
+	EXEMPLO:
+	interface Veiculo{
+		public function acelerator($velocidade);
+		public function freiar($velocidade);
+		public function trocarMarcha($marcha);
+	}
+		
+	class Civic implements Veiculo{
+
+	[8.7 Classe Abstrata]
+
+--> Classe abastra não será instanciada, e para usala, tenho que extende dela em
+	outras classes. Ela é parecida com interface, mas da pra por atributos
+	e métodos implementados dela.
+
+--> Funciona como Java, e so podemos Extender de apenas uma classe
+
+	[8.8 Polimorfismo]
+
+--> Muitas formas : Ter o memso nomes mas execuções diferentes
+
+--> Método do pai:
+	+ Usamos a keword 'parent' e usamos ':: para acessar seu método
+	EXEMPLO:
+	public function andar(){
+		// vou chamar o metodo de animal, do pai
+		return "Voa e ".parent::mover();
+	}
+
+	[8.9 AutoLoad - Carregar Classes]
+
+--> O certo é deixar um arq php so com a classes e usálo em outras
+
+--> AutoLoad : Serve pra carregar automatiamcente as classe sem presias do require
+	+ Podemos colocalo num arquivo de configuração
+	+ WARNING! Vamos deixa o nome do arquivo com mesmo nome da classe em Maius.
+
+--> function : __autoload($nameClass)
+	+ Método mágico que serve pra carrega automaticamente as classe, desde que
+		os arquivos tenham o mesmo nome da classe
+	EXEMPLO:
+	+ Quando executar DelRey(), vai pro __autoload($nomeclasse), vamos
+		entao fazer um require once na hora.
+	+ Dessa forma, a chamada de classe fica compacta a esta variavel
+		e assim, nao presisa fazer muito require_once
+
+	function __autoload($nomeClasse){
+		var_dump($nomeClasse);
+		require_once("$nomeClasse.php");
+	}
+
+	[8.10 AutoLoad para outras pastas]
+
+--> function : spl_autoload_register("StringnomeFunction" || Func Anonima)
+	+ Serve para registra mais de uma funçao ao ser executada quando
+		nos chamarmos o autoreload
+	+ O topicos de spl sao ccombrado no certificado Zen
+	+ A classe de ve ter o mesmo nome do arq
+	EXEMPLO:
+		+ Vai Registar duas funçoes para o autoreload, e vai executalas
+		+ vai procurar numa certa pasta o arquvio com o nome
+
+	function incluirClasses($nomeClasse){
+		if(file_exists($nomeClasse.".php") === true){
+			require_once($nomeClasse.".php");
+		}
+	}
+
+	// Registrar essa funçao pra ser executada no autoreload
+	spl_autoload_register("incluirClasses");
+
+	// Vamo procurar classe em outro diretorios - Função Anônima
+	spl_autoload_register(function($nomeClasse){
+		var_dump($nomeClasse);
+		if(file_exists("PastaDeClasses".DIRECTORY_SEPARATOR.
+		$nomeClasse.".php") === true){
+			// echo 'here';
+			echo "PastaDeClasses".DIRECTORY_SEPARATOR.	
+			$nomeClasse.".php";
+			require_once("PastaDeClasses".DIRECTORY_SEPARATOR.
+			$nomeClasse.".php");
+		}
+	});
+
+	[8.11 NameSpace]
+
+--> Praticas de PHP com OO
+	+ Oganizar em pastas e organizar pastas por Assunto
+
+--> NameSpace 
+	+ Permite agrupar as classe com um nome
+	+ Permite que possamos ter classes com nome iguais
+
+--> CONSTANTE : DIRECTORY_SEPARATOR	
+	+ Usamo essa constante que se adapta ao SO, poi no unix usa-se '/' para 
+		separar e no Windows eh '\'
+	+ Com isso, muda de acordo com o SO
+	// require_once("/PastaDeClasse/DelReyRe.php");
+	$carro = new DelReyRe();
+
+--> Como ocorre o acesso do namespace
+	+ Quando não declarado, procure na pasta 
+
+	EXEMPLO 1:
+	namespace Project\Model;
+	class User {}
+	$var = new User;
+	// Vai procurar na pasta '/User' o arquivo 'User.php' pela class 'User'
+
+	EXEMPLO 2:
+	// Example - Namespace scope
+	namespace Project;
+	$var = new \Project\Model\User;
+	// Resultado: Project\Model\User
+ 
+	// Example - Global scope
+	$var = new \Project\Model\User;
+	// Resultado: Project\Model\User
+
+--> Keyword : use
+	+ Serve par importar classes/interface/namespaces atravez de sesus nome
+		que devem esta de acordo com a conversao
+	+ Pode-se usar multiplos namspace separando com virgula
+
+--> Keyword : as
+	+ Se usamos o use, e estamos indo muito funo nos namespace, fica ruim
+		chamalo de outra coisa apartir da keyword 'as'
+	+ Serve pra deixar explicito no codigo de onve de o eplido e que 
+		pode assim ter outro bnome a chamda de uma classe
+	EXEMPLO:
+	use Project\Model\User as UserAlternative;
+	$var = new UserAlternative;
+	
+--> NameSpace começa com letra maiuscula
+	+ Deve ser declaro depois do <?php, se nao ERRO
+	+ Definido apartir do PHP 5.3
+	+ Serve para identificar o contexto em que sera usado algo
+	+ Constante Mágica __NAMESPACE__ É uma ct dinâmica que seu valor é baseado 
+		no mapemaneto do namespace de onde é chamda
+	+ No PHP7, podemos usar NameSpace para acessar Constante emétodos
+	EXEMPLO: DECLARANDO NAMESPACE
+	<?php
+	namespace Project;
+
+--> Namespaces possibilitam o agrupamento de classes, interfaces, funções e 
+	constantes, visando evitar o conflito entre seus nomes, atuando como um 
+	encapsulador para estes itens, seu funcionamento é equivalente ao de 
+	diretórios em sistemas operacionais, onde dois arquivos de mesmo nome não 
+	podem existir em um único diretório, mas nada impede a existência de dois 
+	arquivos de mesmo nome localizados em diretórios distintos, este mesmo 
+	princípio é aplicado no PHP através de namespaces, ao utilizar este recurso 
+	temos mais liberdade na hora de criar classes, funções e etc, não sendo mais 
+	necessário utilizar prefixo para diferenciar seus nomes.
+	
+--> ESTUDAR E FAZER MAIS EXMEPLOS DE NAMESPACE
+
+--> link : https://magazine.softerize.com.br/tutoriais/php/namespaces-no-php
+
+-----------------------------------------------------------------------------------|
+
+	{[ 9. Banco de Dados ]}
+
+	[9.1 MySqlWorckBench]
+
+--> Vamos aprender a instalar o mysql workbech
+	+ No meu WorckBench a senha é em brancon, ndada
+
+--> command : WorckBeach : use db_php7;
+	+ Serve para indicar que vai usar um certo banco, isso é imporante, pra 
+		saber se ta no banco certo, basta ve se o nome dele na barara 
+		lateral do schema está em negrito
+	
+
+--> WorkBench
+	+ As consulta sao feitas no banco, uma vez que executa ta no BD
+	+ Em geral, tem que atulaiza ou reocnectarr as coisas pra que as mudanaças 	
+		na configuraçao sejam fixadas
+	+ O comando DELETE apaga os dados, mas, se hovuer autoincrement, vai 				continaur de onde parou
+		+ Pra apagar isso, tem que fazer um 
+			TRUNCATE TABLE [nome_tabela] //nao deixa por where
+		+ Mas tome cuidado, o truncate limpa tudo
+
+--> COMMANDOS
+	+ MySql permite somente um TIMESTAMP por tabela
+	+ A ultima couna nao tem virgula
+
+--> Sequencia de COmandos
+
+use db_php7;
+
+
+CREATE TABLE tb_usuarios(
+		idusuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		deslogin VARCHAR(64) NOT NULL,
+		dessenha VARCHAR(256) NOT NULL,
+		dtcadastro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()
+);
+
+INSERT INTO tb_usuarios (deslogin, dessenha) VALUES ('root', 'senha123');
+
+SELECT * FROM tb_usuarios;
+
+UPDATE tb_usuarios SET dessenha = '1234' WHERE idusuario = 1;
+
+DELETE FROM tb_usuarios WHERE idusuario = 1;
+
+TRUNCATE TABLE tb_usuarios;
+
+	[ 9.3 PHP7 Com BD - DIFENRAÇAS E AVISOS ]
+
+--> Com banco de dados, podemos ter uma pagina so que fazr querys para o BD que nele
+	tera informaçoes. Vamos agora ve como o PHP solicita ao BD
+	HTML/CSS <--> PHP <--> BD
+
+--> PHP7 : NO PHP7, HOUVERAM VARIAS FUNÇOES QUE FORAM MUDADAS PARA SE FAZER 
+	+ Para conectar, voce usa em PHP7:
+		1. class MySqli
+		2. PDO
+
+	[ 9.4 Usando BD com a classe MySQLi]
+
+--> TIP : Considere $conexao a var que recebe a class mysqli
+
+--> Conectando ao BD : CONNECT
+	$var = new mysqli(ip,user,password,bd)
+	+ Cria a classe mysqli que serve para conectar e passamos os parametros como
+		strings. SIM, a classe começa com letra minuscula
+	+ Na maquina local : O ip eh localHost, se fosse externa, ela teria que 
+		pegar o IP
+	EXEMPLO:
+	$conexao = new mysqli("localhost", "root", "", "db_php7");
+	+ Se der algum erro, podemos verificar isso
+	EXEMPLO:
+	if ($conexao->connect_error) {
+		echo "Error : ".$conexao->connect_error;
+	}
+
+--> Realizando Query : INSERT
+	1. Preparamos um esqueleto da query com $conexao
+		$any_query = $conexao->prepare(
+		"INSERT INTO tabel (para1, param2) VALUES (?, ?)");
+	   + Aqui o '?' sera os parametro que serao inseridos depois , nesse
+		momento estmos somente preparando a query
+	2. Linkamos os tipos e valores dos ?? A VARAIVEIS
+		$any_query->bind_param("ss",$n1_param, $n2_param);
+		+  O primeiro parametro quer dizer o tipo desse dado : ao colocarmos
+			"ss" estamos dizendo que os  ? ? sera strings em ordem
+		+ Os outros parametros serao ponteiros para onde realmente sera
+			pego essse dados,qaudno for feito o execute
+	3. Atribuimos aso ponteiros
+		+ $n1_param = "sttrg"
+		+ $n2_param = "taagasg"
+	4. Executar a consulta	
+		+ Ate entao, tudo o que fizermos foi preparar a consulta, ela vai
+			ser mesmo executada aqui, 
+		$any_quey->execute();
+		+ Nessa hora, vamos ler o bind_para, ver o $n_param, colocalos
+			na query e asism executar
+	OBS:
+		+ Mesmo após isso, podemos colocar outros valores para os param	
+			e executar, assim, economiza fazer tudo dnovo, pois
+			o esqueleto ja esta pronto, esntao, podemos musar valores
+
+	EXEMPLO:
+	+ Conecta ao banco mysqli (se ativado) e faz dois insert com um unico
+		prepare. Perceba que se foseesmo por em outra tabela, teria
+		assim que cirar outro prepare.
+	$conexao = new mysqli("localhost", "root", "", "db_php7");
+	if ($conexao->connect_error) {
+		echo "Error : ".$conexao->connect_error;
+	}
+	$stmt = $conexao->prepare(
+		"INSERT INTO tb_usuarios (deslogin, dessenha) VALUES(?, ?)");
+	$stmt->bind_param("ss", $login, $pass);
+	$login = "user";
+	$pass = "12345";
+	$stmt->execute();
+	$login = "root";
+	$pass = "!@*";
+	$stmt->execute();
+	
+--> Realizando Query SELECT to JSOON
+	+ Fazmo a conesoa dea mesma forma que antes
+	+ Vamos executar o comando $conexao->query ("SELECT ...");
+		que vai RETORNA as linhas como uma coisa so
+	+ Depois temos que pegar os dados de cada linha, para isos, fazemos um while
+		while($row = $result->fetch_assoc()){}
+	+ ai, teremos que cada linhas ficara em row
+	+ podemos colocar essas linhas num array para mandar por json
+	EXMEPLO:
+	$result = $conexao->query("SELECT * FROM tb_usuarios ORDER BY deslogin");
+	$data = array();
+	while($row = $result->fetch_assoc()){
+		array_push($data, $row);
+	}
+	echo json_encode($data);
+
+	[9.5 PDO]
+
+--> PDO já existia antes (PHP5) , mas com a descontinuidade das funçoes antigas, 
+	agora sera a forma mais usada para acessar o Banco
+	
+--> Por que PDO : Porque assim modemos usar para varios banco, enquanto
+	antes tinhamaso funçoes expecificas para cada BD, com PDO nao tem mai isso
+
+--> COm PDO voce pode trabalhar com transaçoes 
+	+ (Ou tudo da certo e eu conforma, ou se dar um erro, cancela tudo)
+
+
+	EXEMPLO:
+	Procura a pasta
+
+	[9.6 Banco de Dados SQL Server]
+
+--> Mais comun no ambiente corporativo, vamo mexer com ele pra aprender a trabalhar 
+	com outros bancos
+
+--> Tem inumeros recursos , mais que o mysql.
+	+ o SQL é  mais rapido, mas voce somente com muitos rows
+
+--> ETAPAS
+	1. Baixa esse Arquivo na edição Express
+	https://www.microsoft.com/en-us/sql-server/sql-server-downloads
+		São os componente para a instalçao
+	2. Instala ele (eh 1 GB)
+	3. Executa o SETUP.exe dele : abrirar a tela de instalação, estamos
+		criando uma instancia do SQL Server
+	4. Vai na primeira opçao e da tudo next
+		O Nome da instancia tem que ser único na maquina : 
+			o default eh : SQLExpress / SQLEXPRESS
+	5. Coloque modo mixed (SA - System Administrator)
+		Colocamos a senha como : "root"
+	6. Depois vamos intalar um gerenciador
+	7. Vamos baixar o Microsoft SQL Server Management Studio
+	link : https://docs.microsoft.com/pt-br/sql/ssms/
+	       download-sql-server-management-studio-ssms
+		+ Eh uma interface pra ptrabalhar com o SQL Express
+	8.  Entre no Miscrosof SQL Server Management Studio e conecte
+		como SQL SERVE :
+		login sa
+		pass  root
+
+	ESCRITA NO SQL SERVER
+CREATE TABLE tb_usuarios(
+idusuario INT NOT NULL IDENTITY PRIMARY KEY,
+deslogin VARCHAR(64) NOT NULL,
+dessenha VARCHAR(256) NOT NULL,
+dtcadastro DATETIME NOT NULL DEFAULT GETDATE()
+);
+
+SELECT * FROM tb_usuarios;
+
+INSERT INTO tb_usuarios (deslogin, dessenha) VALUES ('root', '%t#$');
+	
+--> DRIVERS DO PHP PARA PDO COM SQL SERVER
+	+ Temo que baixar uns drivers para o PHP le o SQL SERVER, por que ele so 
+	sab ler por padrao so o MySQL
+	+ no site da udemy tem, sao arquivos dll
+		+ Tem varios arquivos para funcionar em varias arquiteturas 
+		diferetnes
+	+ Colocamos na pasta xampp/php/ext/
+		+ Aqui fica as extensoes e outros
+	+ Depois vamos para a pasta xampp/php e procura o arquivo
+		php.init
+	+ Abre ele com um editor e procurar CRTL + F ('extens') EXETENSAO
+		+ procure ate a parte que vai ter umonete de Extensoes (Windows)
+		+ Digite:
+	extension=php_sqlsrv_7_ts_x64.dll
+	extension=php_pdo_sqlsrv_7_nts_x64.dll
+	extension=php_sqlsrv_7_nts_x64.dll
+	extension=php_pdo_sqlsrv_7_ts_x64.dll
+	extension=php_pdo_sqlsrv_7_nts_x86.dll
+	extension=php_pdo_sqlsrv_7_ts_x86.dll
+	extension=php_sqlsrv_7_nts_x86.dll
+	extension=php_sqlsrv_7_ts_x86.dll
+		+ Reinicie o xampp e deve funcionar agora
+
+	[9.7 PDO com o SQL SERVER - Código]
+
+ Para mostra que PDO serve posibilita voce usar qualquer banco
+	Com uma simples mundamça, vamos usar o mesmo codigo de PDO do
+	Mysql para rodar o SQL Server
+		O connectionPolling nao eh muito importante, é manter o estado
+	da conexao. Se eu deixo 0, quando o cliente executar algo, depois encerra
+		Quando Cn=onnectionPooling for 1 : Manter ainda, como se eu
+	deixa-se a porta ligada. é ligada a questao de multthread, pro caso
+	de o SELECT demorar muito, assim, voce pode dividir as coisas para
+	fazer coisa pesadas em paralelo
+
+Conexeao no BD MySQL
+--> $conexao = new PDO("mysql:dbname=db_php7;host=localhost", "root", "");
+COnexao SQL SERVER
+-->$conexao = new PDO("sqlsrv:Database=db_php7;server=localhost
+	\SQLEXPRESS;ConnectionPooling=0", "sa", "root");
+
+--> Com a mudamça de apenas uma linha, da string de conexao, podemos mudar de um
+	BD para o outro
+
+	[9.8 Continunaod PDO com MySQL]
+
+--> Ao usar o PDO, os parametros ficam separadaos do caonsulta, com isso, evita-se a
+	possibilidae de um ataque SQL INJECT
+	+ Ou seja, oferece mais segurança
+
+--> Voce pode mandar qualquer comando dentro do prepare, alem disso, voce pode por
+	varios comandos separados por ';', sendo que  somente o ultimo que tiver
+	retorno ira ser retornado
+
+	EXEMPLO : UPDATE PDO MYSQL
+
+$conexao = new PDO("mysql:dbname=db_php7;host=localhost", "root", "");
+
+$statement =  $conexao->prepare(
+	"UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :PASSWORD WHERE idusuario = :ID;");
+
+$login = "jose";
+$password = "querty";
+$id = 2;
+
+//Vamos fazer o bind dessa variavei para o parametro, LIGANDO-AS
+
+$statement->bindParam(":LOGIN", $login);
+$statement->bindParam(":PASSWORD", $password);
+$statement->bindParam(":ID", $id);
+
+// Realmente Inseriu
+$statement->execute();
+
+
+	[9.9 PDO e DELETE]
+
+--> Ao usar DELETE use sempre o WHERE pra nao deletear tudo
+	+ ELe esclui dados, nao a estrutura, quem faz isso eh o DROP
+
+	EXEMPLO:
+$conexao = new PDO("mysql:dbname=db_php7;host=localhost", "root", "");
+
+$statement = $conexao->prepare(
+	"DELETE FROM tb_usuarios WHERE idusuario = :ID;");
+
+//Vamos fazer o bind dessa variavei para o parametro, LIGANDO-AS
+$id = 1;
+$statement->bindParam(":ID", $id);
+
+// Realmente Inseriu
+$statement->execute();
+
+	[9.10 PDO e transações]
+
+--> "COMO FAZER UMS TRANSAÇÂO : UM INSERT/DEL/UPDATE QUE, CASO DER ALGUM ERRO
+	NAO VAI EXECUTADR E VAI VOLTAR PARA UM CHECKPPOINT (CTRL + Z)"
+	+ Ou tudo da certo com COMMIT ou volta com ROLLBACK para cancelar
+	
+--> "ESSA SERIE DE QUEYS DEVEM ACNTECER TODAS EM SEQUENCIA E CERTAS, SE DER 
+	ALGUM ERRO, RETORNA TUDO"
+
+--> Podemos usar TRANSACTION:COMMIT/ROLLBACK junto com um TRY CACTH PRA TRATALO
+
+	[9.11 PDO E DAO para o Objeto Usuário]
+
+--> DAO (Data Access Object)
+	+ Vamos criar classes proprias no PHP que ja vao se conectar no banco
+	+ Asism, essas classe servem como um INTERFACE, que permite que uns
+		mexam com essa classe e os outros somente usem suas funçoes
+
+--> Vantagem : Inumeras
+	+ Voce cetnraliza o local que acessa o banco; 
+	+ Segurança : Voce deixa o coidgo somente em classe unicas
+
+--> index.php : eh o primeiro a ser executado quando nao especificado qual arquivo
+
+	DAO
+
+/dao/class/Sql.php
+class Sql extends PDO {
+
+	private $conexao;
+
+	// Constutor : Quando criada, ja cria a conexao com o BD
+	public function __construct(){
+		$this->conexao = new PDO(
+			"mysql:host=localhost;dbname=db_php7", "root", "");
+	}
+
+	// Liga as variavies para a query : executa setParam
+	private function setParams($statment, $parameters = array()){
+		foreach ($parameters as $key => $value) {
+			$this->setParam($statment,$key,$value);
+		}
+	}
+
+	private function setParam($statment, $key, $value){
+		$statment->bindParam($key, $value);
+	}
+
+	// Prepara e Executa uma query inserindo parametros
+	public function query($rawQuery, $params = array()){
+		$statment = $this->conexao->prepare($rawQuery);
+		$this->setParams($statment, $params);
+		$statment->execute();
+		return $statment;
+	}
+
+	// Vai executar uma RawQuery e vai imprimir tambem, quety nos criamos
+	public function select($rawQuery, $params = array()):array{
+		$statment = $this->query($rawQuery, $params);
+		return $statment->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	[9.12 DAO para Usuario]
+
+--> Criamos o Usuario.php para representalo na web
+
+/dao/class/Usuario.php
+class Usuario{
+	private $idusuario;
+	private $deslogin;
+	private $dessenha;
+	private $dtcadastro;
+
+//GETTER E SETTERS
+public function loadById($id){
+		$sql = new Sql(); // Vem do SQL de antes
+		$result = $sql->select("SELECT * FROM tb_usuarios WHERE 
+			idusuario = :ID", array(":ID" => $id));
+		// Verifica se isso existe
+		if(isset($result[0])){
+			$row = $result[0];
+			$this->setIdusuario($row['idusuario']);
+			$this->setDeslogin($row['deslogin']);
+			$this->setDessenha($row['dessenha']);
+			$this->setDtcadastro(new DateTime($row['dtcadastro']));
+		}
+	}
+
+	// __toString para  dar um JSON
+	public function __toString(){
+		return json_encode(array(
+			"idusuario"  => $this->getIdusuario(),
+			"deslogin"   => $this->getDeslogin(),
+			"dessenha"   => $this->getDessenha(),
+			"dtcadastro" => $this->getDtcadastro()->format("d/m/Y
+			 H:i:s")
+		));
+	}
+
+--> Index que executa e vai epgar um usuario e mostra como JSON
+
+/dao/index.php
+
+<?php
+
+require_once("config.php");
+$root = new Usuario();
+$root->loadById(3);
+echo $root;
+
+?>
+
+	[9.13 PDA - Listar dados]
+
+--> Com o DAO criamos mais funçoes para a classe Usaurio
+
+	EXEMPLOS:
+
+// Serve para busca um login de acordo com a String que agente passar
+	public static function search($login){
+		$sql = new Sql();
+		return $sql->select("SELECT * FROM tb_usuarios 
+			WHERE deslogin LIKE :SEARCH ORDER BY deslogin ;",
+			array(':SEARCH' => "%".$login."%"));
+	}
+
+	// 
+	public function login($login, $password){
+		$sql = new Sql();
+		$result = $sql->select("SELECT * FROM tb_usuarios 
+			WHERE deslogin = :LOGIN AND dessenha = :PASSWORD",
+			array(
+				":LOGIN"    => $login, 
+				":PASSWORD" => $password
+		));
+		// Verifica se isso existe
+		if(count($result) > 0){
+			$row = $result[0];
+			$this->setIdusuario($row['idusuario']);
+			$this->setDeslogin($row['deslogin']);
+			$this->setDessenha($row['dessenha']);
+			$this->setDtcadastro(new DateTime($row['dtcadastro']));
+		}else{
+			throw new Exception("Login ou senha Invalidos");
+		}
+	}
+
+	[9.14 ]
+
+--> Aqui camamos uma procedure:
+	1. Presisa ser definida no BD
+	2. Sua sinaxe varia de BD (WARNING!)
+
+--> CRIANDO PROCEDURE
+
+PROCEDURE `sp_usuarios_insert`(
+pdeslogin VARCHAR(64),
+pdessenha VARCHAR (256)
+)
+BEGIN
+	INSERT INTO tb_usuarios (deslogin, dessenha) VALUES (pdeslogin, pdessenha);
+    SELECT * FROM tb_usuarios WHERE idusuario = LAST_INSERT_ID();
+END
+
+--> Exmeplo de construtor com param default:
+	+ Quando nao vier, vai chamar com ""
+	public function __construct($login = "", $password = ""){
+		$this->setDeslogin($login);
+		$this->setDessenha($password);
+	}
+
+	[9.15 UPDATE COM DAO]
+
+--> Se a parte da QUERY(SQL) estiver errada, ele nao cusas, ele simplismente
+	nao vai executar e ndao da erro neum, cuidado com a escrita
+
+	EXEMPLO?
+	public function update($login, $password){
+		$this->setDeslogin($login);
+		$this->setDessenha($password);
+		// A CLASSE SQL EH quem vai executar
+		$sql = new Sql();
+		$sql->query("UPDATE tb_usuarios 
+			SET deslogin = :LOGIN, dessenha = :PASSWORD
+			WHERE idusuario = :ID", array(
+				":LOGIN"   =>$this->getDeslogin(),
+				":PASSWORD"=>$this->getDessenha(),
+				":ID" 	   =>$this->getIdusuario()
+		));
+	}
+
+-----------------------------------------------------------------------------------|
+
+	{[10. Manipular Arquivos do PHP]}
+
+	[10.1 Brincando com direotrio]
+
+--> OBS echo: o echo interpola variaveis, basta colocar o $var
+	EXEMPLO:
+	$var = "var1";
+	echo "Vai imprimir ... $var";
+
+--> Sempre que voce quiser escrever uma barra invertida "\" tera que colcoar
+	duas barras "\\"
+
+--> function : is_dir($name_dir)
+	+ retorna true se o diretorio existe, e false se nao existe
+
+--> function: mkdir($var_string)
+	+ cria o diretorio no file_path onde esta
+
+--> function : rmdir($var_string_name_directory)
+	+ remove diretorio do file_path de onde executou
+
+	EXEMPLO:
+	+ Usando essas tres funções
+	$name_directory = "images";
+	//verificar se um diretorio existe ou nao a partir da aqui
+	if(!is_dir($name_directory)){
+		mkdir($name_directory);
+		echo "Diretorio $name_directory criado com sucesso";
+	}else{
+		//remove diretorio
+		rmdir($name_directory);
+		echo "Ja existe diretorio: $name_directory, e foi removido";
+	}
+
+	EXEMPLO2 :
+	+Le diretorio e retorna JSON dos dado de cada elemento
+
+$directory_images = scandir("images");
+$data = array();
+foreach ($directory_images as $img) {
+	if(!in_array($img, array(".",".."))){
+		$filename = "images".DIRECTORY_SEPARATOR.$img;
+		$info = pathinfo($filename); //voce passa todo o caminjho pra ele
+		$info["size"] = filesize($filename)." Bytes";
+		$info["modified"] = date("d/m/Y H:i:s", filemtime($filename));
+		$info["url"] = "http://localhost:8080/udemy-php7/ex5-						files/".str_replace("\\","/",$filename);
+		array_push($data, $info);
+	}
+}
+echo json_encode($data);
+
+
+--> function : scandir($name_pasta)
+	+ Le os arquivos dentro da pasta e retorna um array de tamanh n+2 onde
+		n eh o numero de elemetos do diretorio sendo + 2 pois
+		[0] = "." e [1] = ".."
+	Exemplo:
+	array(7) {
+  [0]=>
+  string(1) "."		//direotiro atual
+  [1]=>
+  string(2) ".."	//Sobre nivel direotiro
+  [2]=>
+  string(10) "ananta.jpg"
+--> OBS: Ao fazer $info["size"] = $value, definimos entao que o array tera esse 		campo e entao tera chave e valor na hora
+
+--> function : pathinfo|filesize|filemtime($filepath), 
+	+ Retorna varios dados do arquivo
+	+ Retorna tamamnho em Bytes | retorna data de modificaçao
+
+	[10.2 fopen() e unlnk()]
+
+--> Vamos mexer dentro do arquivo, isso é um processeo em que abrimos e fechamos
+	um arquivo. Ao entramos num arquivo temos que fazer:
+	+ fopne ("name", "tipo_de_acesso");
+	+ fclose ($var_resource_file);
+
+	EXEMPLO:
+	$file = fopen("log.txt","w+");
+	fwrite($file, date("Y-m-d H:i:s"));
+	fclose($file);
+	echo "Arquivo criado com sucesso!";
+
+--> function : implode($arg1,arg2)
+  	+  junta os elem do array arg2 em uma string separada por arg1
+	EXEMPLO: implode(",",$data)
+
+--> function : unlik($name_file)
+	+ Remove um arquivo
+	EXEMPLO: unlink("test.txt");
+		--> funcriona para diretorio tambem
+
+	EXEMPLO:
+	+ Excluindo arquivos da pasta "images - Copia"
+	if(!is_dir("images - Copia")) mkdir("images - Copia");
+
+	foreach (scandir("images - Copia") as $item) {
+		if (!in_array($item, array(".",".."))){
+			unlink("images - Copia".DIRECTORY_SEPARATOR.$item);
+		}
+	}
+
+	[10.3 - ler File]
+
+--> function : fgets($resource_file) : string
+	+ retorna a primeira linha do aqruivo incluindo o \n
+	+ ELe lê a primeira linha e vai com o cursor para baixo
+	+ retorna false se nao houver a linha
+	
+--> function : explode(arg1,arg2)
+	+ dado a string arg2, vai separar onde tiver o char arg1, como separador
+		para forma um array
+	EXEMPLO
+	$str1 = "Rafael,Morais,de,Assis"
+	$array1 = explode(",", $str1)
+	print($array1) # array : ["Rafael","Morais","de","Assis"]
+
+	EXEMPLO:
+	+ Lê um CSV e imprimeo como JSON
+$filename = "usuarios.csv";
+if(file_exists($filename)){
+	$file = fopen($filename, "r");
+	// Separa toda vez que achar uma vírgula, headres é um array
+	$headers = explode(",",fgets($file));
+	$data = array();
+	while($row = fgets($file)){
+		$rowData = explode(",",$row);
+		for($i = 0; $i < count($headers); $i++){
+			$linha[$headers[$i]] = $rowData[$i];
+
+		}
+		array_push($data, $linha);
+	}
+	fclose($file);
+}
+
+echo json_encode($data);
+
+--> function : file_get_content($filepath_to_file) : Binario
+	+ Le todo o arquivo e coloca como uma unica string grandona
+	+ Podemos até mesmo ler uma imagem que retorna o seu Binario
+
+--> function :  base64_encode($binario) : String
+	+ Pega um conteudo binario e retorna sua converção em String
+	
+--> class : finfo
+	+ Serve para manipular arquivo (Pesquisar mais sobre ela)
+
+--> AO fazer >> data:mimetype;base64;BLOB
+	+ teremos entao a leirtura do BLOB pelo Browser que retornara uma string
+	+ Estamos enstao convertendo texto em uma imbagem
+
+	EXEMPLO:
+<?php 
+
+$filename = "images/ananta.jpg";
+
+// Essa funçao le todo o arquivo, e, retorna como BINARIO
+$base64 = base64_encode(file_get_contents($filename));
+
+$fileinfo = new finfo(FILEINFO_MIME_TYPE);
+$mimetype = $fileinfo->file($filename);
+
+//echo "data: ".$mimetype.";base64,".$base64;
+
+$base64encode = "data:".$mimetype.";base64,".$base64;
+
+?>
+
+<a href="<?=$base64encode?>" target="_blanck"> Linka para imagem </a>
+<img src="<?$base64encode?>">
+
+	[10.4 Upload de Arquivo]
+
+--> Ao fazer Upload, pegamos da pata temporaria onde vai primeiramente o arquivo
+	pelo metodo POST e jogamos onde queremos
+
+--> Arquivos, ao serem transportados pelo metodo POST vao para a var de Sistema
+	$_FILES, e vamos pegar o arquivo no index $_FILES["fileUpload"]
+	Isso sera um array, que tera vaios campos como
+		["erro"] --> se tem algum erro no processo	
+		["tmp_name"] --> onde esta o arquivo em modo temporario
+
+--> function : move_uploaded_file($arg1,$arg2) : Boolean
+	+ $arg1 = onde esta no modo demporario $_FILES["fileUpload]["tmp_name"]
+	+ $arg2 = o file_path de onde ficar ano fim o arquivo ( QUal o diretorio)
+
+	[10.5 Dowload de Arquivos]
+
+--> function : file_get_contents($link) : Binary
+	+ retorna o binario do link passado
+	+ Apos isso, podemos dar o fwrite e esqcreevr o aquivo onde quisermos
+
+	[10.6 Movendo|Renomeadno Arquivos]
+
+--> function : rename($arg1_file_path_origin, $arg2_file_path_destiny)
+	+ ATTENTION! o rename tem esse nome, pois, para o SO, quando nos movemos
+		um arquivo, ele nâo é movido fisicamente. O que muda é o nome do
+		ponteiro que vamos pegar
+	+ O ponteiro de um arquivo é determinado como todo o path dele, por isso
+		mover um arquivo de pasta ou renomealo nao muda para o SO
+	EXEMPLO:
+		+ muda do $dir1 para $dir2 com mesmo nome
+	rename(
+		$dir1.DIRECTORY_SEPARATOR.$filename, //Origem
+		$dir2.DIRECTORY_SEPARATOR.$filename  //DESTINY
+	);
+
+	[10.7 cURL - Biblioteca cURL]
+
+--> cURL : Para o codigo conectar com outros sites, serve para consumir 
+	web service, como REST. Assim, meu sistem vai consumir na URL, se depois
+	eles mudarem, ele vao mudar no mesmo formato e no mesmo endereçp
+
+--> EXEMPLO: WEB SERVICE viacep
+	+ Web Service do IBGE para retornar dados apartir do CEP
+	EXEMPLO:
+	Acesse: https://viacep.com.br/ws/38408192/json/
+	# Vai retornar um JSOn muito massa
+	
+	[10.8 Cookies]
+
+--> Dados que são armazenados no browser do cliente, por exeplo, pra quando ele 
+	voltar, nao presisa digitar as cosia denovo
+
+--> É simples : Você manda criar um dado com uma chava e seu valor, e, tem que 
+	colocar tambem a regra de expiração do cookie, por etica, pois
+	voce esta criando um arquivo no cliente
+
+--> COOKIE:
+	+ Cookie é muito usado em e-comerce, pra guardar as compras, se algo ocorrer
+		e voce sair e depois voltar, o produto fica no carrinho
+	+ Cookie é persistente, mesmo que el saia, A sessâo é pra manter
+	+ Cookies sao usado para e-markiting, se voce pesquisa um produto, uma 
+		empresa de terceiros gera um cookie que liga por uma rede a outras
+		empresa e asism, em todo site vao mostar
+	+ Na aba anonima, voce mata tudo depois que fecha
+
+--> function : setcookie($NAME_COOKIE, $valor, $unix_time_stamp)
+	+ 1param : nome de quando voce for pegar o cookie
+	+ 2param : o que tem dentro do cookie
+	+ 3param : tempo que expira o cooki (obrigaatorio)
+	+ Se voce nao expecifica o 3param, o cookie morre quando fecha o browser
+		Eh o time stamp unix, ao fazer
+		time() + int(segundos), asism : time() + 3600 da uma hora
+
+--> $_COOKIE :
+	+ Nele fica todos os cookies, é um array, para acessar um cooki seu voce
+		tem que chama como chave o 1param de setcookie
+	+ Com isso, voce te
+
+	EXEMPLO
+	$data = array(
+		"empresa" => "Hcode"
+	);
+	setcookie("NOME_DO_COOKIE", json_encode($data), time() + 3600 );
+	echo "OK!";
+
+	EXEMPLO : PEGANDO COOKIE
+
+	if(isset($_COOKIE["NOME_DO_COOKIE"])){
+		$obj = json_decode($_COOKIE["NOME_DO_COOKIE"]);
+		echo $obj->empresa;
+	}
+
+	
+
+----------------------------------------------------------------------------------|
+	{[11. Erros]}
+
+	[11.1 Try/catch]
+
+--> Try/Catch : é um recurso do php para a possibilidade de se ter um erro em um
+	bloco de código. Ele pega e trata o código.
+	+ Voce tenta executar um codigo, se de algum erro captura e vai direto nele
+	+ O try catch ficam em sequencia
+	+ Usamos numero para controlar qual qerro foi
+
+--> Voce pode criar exceçoes extendendo de Exception
+
+--> Você usar try catch quando manupa coisas que podem conter errors que nao dependa
+	de voce, como consultar a SQL e APIS
+
+--> finally : Bloco que é semrpe executado independente de dar try ou catch
+
+	EXEMPLO:
+
+function trataNome($nome){
+	if(!$nome){
+		throw new Exception("Exception : Nenhum nome informado   ", 1);
+		
+	}
+	
+	echo ucfirst($nome);
+}
+
+try{
+	trataNome("joao");
+	trataNome("");
+} catch(Exception $e){
+	
+	echo $e->getMessage();
+	
+	echo "  {Caiu no catch} ";
+} finally{
+	
+	echo " Executou bloco Try!";
+}	
+
+	[11.2 Tratar erro]
+
+--> No PHP, todos os erros fatais sao acoga exceptions,
+
+--> Existe diferença entre
+	+ WARNING!	+ FATAL ERROR!
+	+ NOTICE!	+ EXCEPTIONS
+
+--> ErroHandler : Quando ocorre um erro, vai-se executar algo
+
+--> function : set_error_handler("nomae_da_funcao") : 
+	+ Serve para colcoar uma função como tratadora de erros
+	+ Assim, se de um erro, em vez de aparecer na tela, vai chamar essa funçao
+	+ Por padrao ela ja recebe alguns parametros
+	
+	EXEMPLO:
+	+ Vamos setar para chamar erro_handler quando der algum erro
+
+function error_handler($code, $message, $file, $line){
+	echo json_encode(array(
+		"code" => $code,
+		"message" => $message,
+		"line" => $line,
+		"file" => $file
+	));
+
+}
+
+// espera o nome da funçao : string
+// Isso ficaria no arquivo de configuração
+set_error_handler("error_handler");
+
+// Dar erro durante execução
+$x = 100/0;
+
+--> function : error_reporting($anything)
+	+ Serve para configurar o php ara mostra ou nao algumas coisas
+	+ Com isso, por exmeplo, podemos fazer com que o php nao mostre erros
+		de sintaxe por exemplo.
+	
+	EXEMPLO	
+	//Mostraria normalmente por que o $_GET["nome"] nao foi definido
+	error_reporting(E_ALL & ~E_NOTICE);
+
+	$noome = $_GET["nome"];
+	// Vai dar Notice, por que nao foi definido, mas, com o 
+	//	 error_reporting, nao vai mostra
+
+-----------------------------------------------------------------------------------
+	{[ GD - biblioteca para processar imagens ]}
+
+--> O GD serve para
+	+ A ideia é gerar imagens dinâmicamente
+	+ Colocar marca d'agua
+	+ Entende o browser como Canvas
+	+ Trabalho com eixo X:Y horiz:Verti
+	+ Gerar uma imagem a partir de outra, como tumbnail
+		+ Em php, mesmo pegando uma imagem grande e diminuila com o CSS
+			A imagem ainda é grande
+	+ Da pra fazer o Resize, recortar a foto
+	
+--> function : header
+	+ Serve para que, ao ler esse codigo php representa um tipo
+	+ Porem, com o header ativo, ele nao captura erro, simplismente
+		nao vai mostar
+
+------------------------------------------------------------------------------------
+	{12. Recursos PHP}
+
+	[12.1 gerar Boleto no PHP]
+
+--> Vamo mostrar como integrar ao boletoPHP, um projeto open_source no link
+	https://github.com/CobreGratis/boletophp
+
+--> Aqui, podemos gera boletos, mas pra um e-comerce, presisariamos de conversar
+	com o banco.
+
+	[12.2 Composer]
+
+--> Gerenciador de dependncias PHP
+	+ Eu crio um arquivo de configuraçao que info quais libs meu projeto presisa
+	+ Lembra muito o npm/maven/bundler(gem)
+	+ Podemos até mesmo criar uma lib 
+
+--> Voce instala normal, e executa composer install se tiver um arquivo
+	composer.json, tipo o npm
+
+--> pra verificar se foi instalado, faça $ composer -v no cmd
+
+--> Ele gera um composer.lock, tem a informçao dos downloassd que ele fez
+
+	[Unsando compoer]
+
+--> 1. Voce pode editar um arquivo composer.json
+
+--> 2. usando o composer por cmd
+
+--> Na pasta em que ta a razi do projeto, abimos o cmd e digitamos
+	$ composer init
+		+ O arq nao pod esta iniciado
+		+ pede nome do pacote
+	$composer install
+		+ So funciona  na primeira vez
+	$composer update
+		+ Faz o mesm que o install, e faz sempre pra caso have diferença
+		+ firsta faça install depois so update
+
+--> As dependencias ficam no atributo require:
+    EXEMPLO: ADICIONANDO DEPENDENCIA MONOLOG
+	"DeQuemEh/Nome":"versao
+    "require": {
+    	"monolog/monolog":"1.0.*"
+     }
+
+--> Ao installar a dependeia, o composer gera uma serie de autoload feito pelo 
+	composer, para podemos fazer um autoload simples, e, padronizado
+
+	[PHP-FIG-PS4]
+--> É bom respeitar para se tornar mais profisscional, tire um tempo pra estudar 
+	suas praticas.
+--> link : http://www.php-fig.org/
+	+ Define boas praticas de PHP, padronizando as praticas e estilo de codigo
+	+ Ele faz Coding Style, Interface e Autoloads, ele padroniza tudo isso
+	+ PSR4 : Quer dizer que seu codigo esta de acrodo com esse estilo
+	
+	[12.3 PHP email]
+
+--> PHPemail, eh uma dependenica que vamos baixar com o composer
+
+--> Se quiser fazer mais rapido, crie o composer.json e coloque o codigo abaixo
+	+ vai funcionar  da msema forma e sera rápido
+
+		EXEMPLO: JSON COMPOSER
+{
+	"require":{
+		"phpmailer/phpmailer": "~6.0"		
+	}
+}
+
+--> Para usar essa dependencia, escreva:
+	require_once("vendor/autoload.php");
+	+ Com isso, vai ler o autoload.php gerado pelo composer
+
+--> Pra envair email, tem que ter configuraçao SMTP, é diferente um servidor web
+	do servidor email. O maix conhecido é o exchange da miscrosoft, e presisa 
+	instalalo. Host de sites ja vem com isso com user e senha
+
+--> Nos nao usaremos uma hospedagem de email, vamos fazer de forma gratuira usando
+	endereço de email no GMAIL.
+
+--> Fazer isos nao é impossivel, mas é muito chato, há muitas restrições nele
+
+	[12.4 Templates com RaiTPL]
+
+--> Dependencia que cria templates, quando agente presisa separa dados da parte 		visual, voce cria o modelo, e em n paginas, nos so mudamos os dado, mas a 
+	pagina fica a mesma
+
+--> Como vai funcionar usamndo template
+	+ Temo que indicar quais sao os templates, tem um layout html que fica 
+		separado. O rain pega o html e junta com o php e entao guarda
+		em uma pasta de cache
+
+	[12.5 Criando Virtual Host]
+
+--> Na sua hospedagem na nuvem, voce pode ter varios site num mesmo conpudador
+
+--> Vai na pasta apache/conf/extra/http-vhost.conf
+
+--> Coloque isso, veja bem, o padrao da net é usar a porta 80 pra acessa na net.
+	Como o meu apache esta na porta 8080, temos de mudar isso
+	+ Alem disso, voce acessa:
+		http://local.curso.php7.com.br:8080/
+
+<VirtualHost *:8080>
+    ServerAdmin webmaster@dummy-host2.example.com
+    DocumentRoot "C:/xampp/htdocs/udemy-php7/ex11-virtual-host"
+    ServerName local.curso.php7.com.br
+    ErrorLog "logs/dummy-host2.example.com-error.log"
+    CustomLog "logs/dummy-host2.example.com-access.log" common
+	<Directory "C:/xampp/htdocs/udemy-php7/ex11-virtual-host">
+		Order allow,deny
+		Allow from all
+		Require all granted
+	</Directory>
+</VirtualHost>
+
+--> Na pasta Windows/System32driversetchost, é um arquivo que faz a tradução de
+	DNS. Hacekrs podem vir aqui e modificalo, se o fizer, quando voce chamar
+	certos endereços na internet, vai pra site fake que podem te tirar 
+	informações
+	+ Pata: C:\Windows\System32\drivers\etc
+	+ Colocamos: 127.0.0.1		local.curso.php7.com.br
+
+	[12.6 Slim Framework]
+
+--> Framework voltado para criação de API e rotas
+	+ Slim é um micro-framework para rotas
+	+ Tem haver com REST e RESTFULL
+
+--> o arquivo .htaccess serve para o apache fazer esse esquema de rota
+
+EXEMPLO:
+
+require_once("vendor/autoload.php");
+$app = new \Slim\Slim();
+	//cria rota de metodo GET(acessar URL) que mostra o echo
+$app->get('/', function(){
+	echo "Home Page";
+});
+$app->run();
+
+------------------------------------------------------------------------------------
+
+	{[ 13 Segurança ]}
+
+	[13.1 Comando Injection]
+
+--> Hoje, na arquitetura cliente-servidor, o usaurio é o elo mais fraco. Vamos falar
+	mais do lado de segurança do desenvolvidor, de atques que nossa aplicaçao
+	pode sofrer.
+
+--> Command Injection : Quando o usuario hacker consegue executar comandos no 
+	servidor a partir da comunicação
+
+--> se voce usa a function do php system() para executar comandos de sistema
+	operacional, voce pode esta sujeito a eses tipo de ataque
+
+--> Esse tipo de ataque ocorre pois o hacker pode usar uma ferramneta que filtra
+	os pacotes na rede (WebScrabby), ela pegua os dados e se perceber que voce
+	esta usando instruções de sistemas operacioanis, entao, ele sabe isso e
+	asism o usuario injeta comandos nela
+
+--> Se vinher de um formulario, seria pericoso mais ainda
+
+--> usamso a função escapeshellcmd pra nao executar mais comandos do que deveria
+
+--> escapeshellcmd() escapa qualquer caractere em uma string que possa ser utilizado para enganar um comando shell para executar comandos arbritários. Esta função deve ser utilizada para ter certeza que quaisquer dados vindos do usuário é escapado antes que estes dados sejam passados para as funções exec() ou system(), ou para backtick operator.
+
+Os seguintes caracteres são precedidos por uma barra invertida: #&;`|*?~<>^()[]{}$\, \x0A e \xFF. ' e " são escapados apenas se não estiverem em pares. No windows, todos estes caracteres mais % são ao invés substituidos por um espaço.
+
++ Ele descobre que é um comando e escapa por ai
+
+	[13.2 SQL INjection]
+
+--> é um ataque ao Banco de dados, que é por conta que o desenvolvedor é descuidado
+	+ é quando o hacker injeta comnado junto das comunicações SQL
+	+ A maioria dos sistemas php usam funçoes mysqli
+
+--> Ocorre na URL, tipo, se passamos a variavel e seu valor, podemos pegar ourtos
+	dados. Alem disso, podemos colocar
+	1 OR 1 --
+	Que vai pegar tudo
+	EXEMPLO
+	http://localhost:8080/udemy-php7/ex12-security/exemplo02-sql-injection.php?
+		id=2%20OR%201%20=%201%20--
+
+--> Para se proteger, voce tem que verificar os parametros e tratar ele
+	+ Use PDO com bind parametros
+
+	[13.3 Segurança de Pastas - Permissões]
+
+--> é mais útil em sites hospedados. Mas é perigosos dar permição errada
+
+--> Lista de permições mais usadas:
+0600: Escrita e leitura para o proprietário, nada para os outros;
+0644: Escrita e leitura para o proprietário, leitura para todos os outros;
+0755: Tudo para o proprietário, leitura e execução para os outros;
+0750: Tudo para o proprietário, leitura e execução para o grupo do proprietário.
+0777: WANRING! Pois aqui todos tem permição de fazer tudo, tanto cliente quanto 
+	estranhos
+
+0 - Nao existe permição, nao pode fazer nada
+	1 - permite execução (chamar algo que ta la dentro)
+	2 - permite gravar
+	3 - 1 + 2 (posso execuar e gravar)
+	4 - SOMENTE LEITURA ( ve o que la dentro)
+	5 - LEITURA E EXECUÇÃO
+	6 - Leitura e Gravação
+	7 - Pode ler, escrever e executar (permição total)
+
+--> function : bool chmod ( string $filename , int $mode )
+
+	filename
+O caminho para o arquivo.
+
+	mode
+Note que modo não é necessariamente um número octal, então strings (como "g+w") não funcionarão. Para garantir que a operação seja bem sucedida é necessário prefixar modo com zero (0):
+
+<?php
+chmod ("/arquivo/diretorio", 755);   // decimal; provavelmente incorreto
+chmod ("/arquivo/diretorio", "u+rwx,go+rx"); // string; incorreto
+chmod ("/arquivo/diretorio", 0755);  // octal; representação correta do modo
+?>
+
+	[13.4 ReCaptcha - Você é um robô]
+
+--> Serve para evitar que scrpits de automação preencham formularios ou fazer algo
+	+ Ele nao impede, ele dificulta
+
+--> ReCatcha : Eh um projeto do google, ele tira imagens de numeros de casam ou
+	palavras, e ai, quando ele tem duvida, manda para o recatcha e assim,
+	quando agente preenche o recpatcha, na verdade, voce está
+	APOIANDO O COIDGO DO GOOLE (A IA)
+
+--> Iniciando:
+	1. Acesse o site : https://www.google.com/recaptcha/intro/android.html
+		e va no topo direito : Get reCAPTCHA
+	2. No campo de label voce coloca localhost no caso do servidor, e
+		depois, vai no checkoption e seleciona a opçao que reCatcha,
+		o reCaPTACH V2 é o mais simples, pode ser usado
+	3. Em domain, coloca localhost
+	3. aceite os termos de uso e continue
+		=> Ele vai gerar duas chaves, uma do site e outro do servidor, elas
+		serão importante depois
+	[cliente]
+	4. Vamos fazer com que nosso codigo saiba fazer recatcha, vamos adiciona
+		o scrpit  de javaScript no final do <header>
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	5. No HMTL, no <form> vamo colocar entao a div que vai ser o recatcha em si
+		<div class="g-recaptcha" data-sitekey="key_gerada"></div>
+	[servidor]
+	6. Vamos acessar a PAI do recatcha pra fazer isso, no site
+		https://www.google.com/recaptcha/api/siteverify
+	   Vamos usar CRUL
+	7. Configurando a CURL: vai mandar os parametros:
+		1. secret key do server
+		2. Um campo do POST uqe é gerado por ele
+		3. o ip do clietne remoteo
+
+	[13.5 XSS Cross-site Scrpit]
+
+--> Ataque comum e básico : similiar à injeção de comando, o hacker coloca código
+	HTML nos campos de entrada (formularios) e assim causar o dano. 
+	+ Pode ocorre por colocamos comandos de script JS ou HTML
+
+--> Existe o temporário : com um F5 some
+
+--> Permanente : Quando coloca em coisas qe vão no banco de dados. Se usar scrpits
+	javaScript, pode acessar cookies. Para evitar isso, vamo usar uma função
+	chmada sprit_text() ou html_charges()
+
+--> function : strip_tags($string)
+	+ Serve pra tirar todas as tags que acha na string
+	+ Voce pode por um segundo param para colocar o que pode aceitar
+
+--> function : htmlentities($string)
+	+ Serve para converte sinais de tags em outros simbolos, asism nao vai 
+		executar codigo algum
+
+	[13.6 Fazer Defensa em camadas]
+
+--> Significa criar defensa em camadas
+
+--> Envolve varias camadas de segurança para caso o usaurio passar por uma, use
+	empresas sólidas e reconhecidas para fazer essa política de segurança.
+
+--> Hospedar site hoje é mais colocar em máquina virtuais : Amazon, DigitalOcean, 		MicrosoftAzure, GoogleCloud. Usa isso faz com que a segurança física bem 
+	protegidas. Apesar disso, os governos podem confircalas dependendo de cada
+	país em que a máquina está
+
+--> Lembre-se: Hoje os usuário não gostam de fazer autenticação toda hora
+	programadores desavizadso podem querer deixar ele conectado o tempo todo
+	mas isos pode ser arriscado.
+
+--> Jamais guarde senha em arquivo de texto, use tokens e hash encriptografados 
+	tanto no banco como na máquina do usuário. Nunca confie em um único
+	mecanismo de autenticação. CRITOGRAFIA
+
+--> Para aumentar a segurança, podemos usar SSL para usar um htps
+
+--> Ou voce armazena dados no cookie/local_historage, criptografado e entao, com
+	esse dado vai no banco. Ainda asism, voce pode criar várias camadas. Aí,
+	você pode usar tokesn tanto n
+
+	[13.7 HPHP Session Hijacking]
+
+--> Ataque à sessões (/raijéki). Ocorre pois ao acesar um site, no servidor ele
+	cria um cooki com um id da seesao, e na sua máquina tambem cria.
+	+ Se um hacker descobrir o número da sessão, entâo, ele pode acessar como
+		se fosse você.
+
+--> Voce pode tambem gerar novas sessôes, ele deixa a sessâo e ela fica viva 
+	enquanto o browser estiver aberto.
+
+--> SSL (Security Soft Layer) : Camada de segurança que ela encripta na comunicação
+	+ Uma entidade certificadora (paga) gera uma chave de texto que fica no
+		apache/nix/is. Quem faz isso é a galera de infra-estrutura.
+	+ Na web, a maioria das hospedagens te fornecem isso no servidor de hospedag
+	+ Vantagens: Você pode processsar coisas de cartao de crédito, e o google
+		tenta reduzir o SEO a site que nao tem isso
+
+	EXEMPLO:
+
+// na tela de login
+session_start();
+// depois da tela de login
+// depois de verificar login e senha : reinicie o ID da sessão
+// Dessa forma, perde a sessâo mas nao perde dados de POST
+session_destroy();
+session_start();
+session_regenerate_id();
+
+echo session_id();
