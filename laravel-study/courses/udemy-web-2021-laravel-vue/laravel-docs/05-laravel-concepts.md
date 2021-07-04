@@ -1,5 +1,17 @@
 # Conceitos do Laravel
 
+## Update Views
+
+Se vocÊ trocar a view, muitas vezes nâo vai atualizar na hora. Entâo, escere alguma coisa nos arquivos novos que asism vai forçar a reler. Nâo tem nada haver com cahce e nâo sei porque isso acontece.
+
+````
+https://stackoverflow.com/questions/37503627/blade-view-not-reflecting-changes
+
+In order to avoid the parsing of Blade files on each reload, Laravel caches the views after Blade is processed. I've experienced some situations where the source (view file) is updated but the cache file is not "reloaded". In these cases, all you need to do is to delete the cached views and reload the page.
+
+The cached view files are stored in storage/framework/views.
+````
+
 ## Rotas
 
 **O que deve ficar em Routes**: Lida com métodos HTTP, URL e Middlewares. Não deve ficar nenhuma lógica, esta vai para os controllers

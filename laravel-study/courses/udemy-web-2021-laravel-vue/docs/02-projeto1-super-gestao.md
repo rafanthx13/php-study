@@ -250,3 +250,95 @@ Route::fallback(function() {
 });
 ```
 
+## Seção 7: Avançando sobre Views e Controllers
+
+### Passando parâmetros para o controller
+
+O mais importante é a ordem da tipagem do que os nomes dos parameetros
+
+Routes
+
+```
+Route::get('/teste/{p1}/{p2}', 'TesteController@teste')->name('site.teste');
+```
+
+Controler
+
+```
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class TesteController extends Controller
+{
+    public function teste(int $p1, int $p2) {
+        echo "A soma $p1 + $p2 é: ".($p1+$p2);
+    }
+}
+
+```
+
+O laravel tem intelgiencia de mandar os paramtros para o controller
+
+### Mandando do Controller para o View
+
+Há 3 formas
+
++ Array associativo : manda por array associatibo
+
+  ```
+  // return view('site.teste', ['p1' => $p1, 'p2' => $p2]); //array associativo
+  
+  ```
+
+  
+
++ Compact() : cRIA UM ARRAY ASSOCIATIVO DE FORMA MAIS SIMPPLES
+
+  ```
+          // return view('site.teste', compact('p1', 'p2')); //compact
+  ```
+
+  
+
++ Whith(())
+
+  ```
+          return view('site.teste')->with('xyz', $p1)->with('zzz', $p2); //with()
+  ```
+
+  RECEBER NA VIEW
+
+  ```
+  P1 = {{ $xyz }}
+  <br />
+  P1 = {{ $zzz }}
+  
+  ```
+
+  
+## AssetsSignifica "bem" em relaçÂo a proprierdade.Imagesn, sons, scriptsjs,
+
+ css,  efim, tudo que complementa a linguagem de maracaçâo aHHML
+
+
+
+o Laravel usa o helper ssets para localizalos mais simplimsemnte
+
+**os assets da nossa aplicaçÂo sao colocados na pasta public**
+
+```
+css
+<link rel="stylesheet" href="{{ asset('css/estilo_basico.css') }}">
+
+imagem
+<img src="{{ asset('img/facebook.png') }}">
+```
+
+chamamos por /public/img/image.png, deve ser colocada em public
+
+## Template no blade
+
+Sâo modelos que permite que agnte reaproveite código como hedaer e footer
