@@ -1,5 +1,13 @@
 # Conceitos do Laravel
 
+## PHP Lembrates
+
+Usmaos '->' ppara chamar um método comun
+$name = $foo->getName();
+
+Usamos '::" para executar um método estático
+$name = $foo::getName();
+
 ## Update Views
 
 Se vocÊ trocar a view, muitas vezes nâo vai atualizar na hora. Entâo, escere alguma coisa nos arquivos novos que asism vai forçar a reler. Nâo tem nada haver com cahce e nâo sei porque isso acontece.
