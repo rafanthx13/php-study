@@ -177,3 +177,11 @@ extension=xmlrpc
 ;extension=xsl
 
 ````
+
+## atualizar composer
+
+> composer self-update
+
+## Outras feramenats
+
++ Debugbar: Feio na ultima seçÂo redis (banco em memoria = como um cache), serve para abrir uma barra no larvel e vermos as consusltas feitas no lravel

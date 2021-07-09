@@ -1,12 +1,26 @@
 # Conceitos do Laravel
 
+## Laravel Retornos em api.web
+
+Tudo que retonar como array associativo é convertido para JSON:
+
+````
+return ['errors' => 'dgijsjdgds'];
+````
+
 ## PHP Lembrates
+
+**Difeneça entre -> e ::**
 
 Usmaos '->' ppara chamar um método comun
 $name = $foo->getName();
 
 Usamos '::" para executar um método estático
 $name = $foo::getName();
+
+**function dd()**
+
+Use ela ao invez de var_dunp  para ver o conteudo e ocupar todoa a tela. Assim fica mais fácil de ver a variavel
 
 ## Update Views
 

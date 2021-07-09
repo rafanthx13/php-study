@@ -1,6 +1,12 @@
 # Laravel diferença entre as versões
 
+## RouteServiceProvider no Laravael 8
 
+"PORUQ EVOCE TEM QUE POR TODO O NAMESPACE EM ROUTE"?
+
+Porque a linha vem comentaa
+
+`protected $namespace = 'App\Http\\Controllers`;
 
 ## Chamando controllers de Routes
 
