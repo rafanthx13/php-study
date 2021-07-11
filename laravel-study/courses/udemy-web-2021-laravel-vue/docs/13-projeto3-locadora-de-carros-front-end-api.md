@@ -1,18 +1,20 @@
-# Seção 19: App 03 - Locadora de Carros - Projeto intra Laravel com Vue
+# Seção 19: App 03 - Locadora de Carros - Projeto Laravel com Vue
 
-Implementar Front-End Vue dentro do laravel mescaldno Vue e Blade.
+Implementar Front-End Vue dentro do laravel mesclando Vue e Blade.
 
 Essa parte nem quis ver, de como integra blade+vue, PULEI
 
-## Detalhes
+## Detalhes Específicos analisados
 
-### Axios : Interceptar Request/Reponse
+### Axios : Interceptar Request/Response
 
-E força por o Token
+Interceptamos com Axios para forçar por o Token no Header
 
-`bootstrap.php` : aki é onde é colocado o axios no nosso projeto vue-intra-laravel
+`bootstrap.php` : Aqui é onde é colocado o axios no nosso projeto vue-intra-laravel
 
-```
+É nesse arquivo também que configuramos o axios para interceptar
+
+```js
 const { default: axios } = require('axios');
 
 window._ = require('lodash');
@@ -39,23 +41,6 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-
-// import Echo from 'laravel-echo';
-
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     forceTLS: true
-// });
 
 /* interceptar os requests da aplicação */
 axios.interceptors.request.use(
@@ -107,16 +92,17 @@ axios.interceptors.response.use(
         return Promise.reject(error)
     }
 )
-
 ```
 
 
 
 ## Projeto Final
 
+SERVE DE EXEMPLOE PARA OUTROS PROJETOS. CTRL+C + CTRL+V
+
 `api.php`
 
-```
+```php
 <?php
 
 use Illuminate\Http\Request;
@@ -140,13 +126,11 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
 
 Route::post('login', 'App\Http\Controllers\AuthController@login');
 Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
-
-
 ```
 
 `web.php`
 
-```
+```php
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -163,4 +147,3 @@ Route::get('/marcas', function() {
 })->name('marcas')->middleware('auth');
 ```
 
-.......

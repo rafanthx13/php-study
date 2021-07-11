@@ -4,14 +4,166 @@ Script que já cria muita coisa, como no django. Deve está na raiz do projeto l
 
 ## Listar todos os comandos
 
+## Migrations
+
+## Comandos interessantes do `artisan migrate`
+
+```
+php artisan migrate:status
+```
+
++ Atalho para listar as migrations já executados, 
+
+```
+php artisan migrate:reset
+```
+
++ Executa todos s rollback das migrations
+
+```
+php artisan migrate:refresh
+```
+
++ Ele faz todos os rollbacks e em seguida todos os migrate
++ Útil para desfazer tudo e recriar tudo sem informação
+
+```
+php artisan migrate:fresh
+```
+
++ Parecido com o *refresh* mas não executa o rollback, ele faz um `drop` dos objetos
+
+
+
+**OBS**: Podemos usar as migrate direto do curso da udemy que elas funcionam no laravel 8
+
+```
+php artisan migrate:rollback
+```
+
+execut 1 rolback
+
+```
+php artisan migrate:rollback --steps=2
+```
+
+
+
 ## Principais comandos
 
-+ `php artsian serve`
++ ```
+  php artsian serve
+  ```
+  
   + Sobe a aplicação: se quiser outra porta, coloque a flag  `--port=8888`
-+ `php artisan route:list`
+  
++ ```
+  php artisan route:list
+  ```
+  
   + Lista todas as rotas da nossa aplicação
+  
++ ```
+  php artisan tinker
+  ```
+  
+  + O `tinker` é um shell alravle que permite usar as Models manulamente
 
-### Listar comando `php artisan list`
+  + É uma opçâo ao invez de testar as coisa no dófigo
+  
+  + Exemplo: Criar um usuário pelo tinker
+  
+    + ```
+      php artisan tinker
+      >> $user = new app\models\user();
+      >> $user->name = 'jorge'
+      >> $user->email = 'jorge#tests'
+      >> $user->password = bcrypt('1234')
+      >> var_dump(user->getattributes())
+      ```
+  
+      
+  
++ ```
+  php artisan migrate
+  ```
+  
+  + Executa as migrations, todas elas
+  
++ ```
+  php artisan db:seed
+  ```
+
+  + Executa todas as seeders
+
+
++ ```
+  php artisan db:seed --class=UserSeeder
+  ```
+
+  + Executa uma seeder especifica
+
++ ```
+  php artisan make:migration SiteContato -m
+  ```
+
+  + alemd e criar uma migration, cria seu model
+
++ ```
+  php artisan make:seeder FornecedorSeeder
+  ```
+  + cria seeder
+
+
++ ```
+  php artisan make:factory SiteContatoFactory --model=SiteContato
+  ```
+
+  + Criando uma Facoter. É necessa´rio apssad o Model dela
+
++ ```
+  
+  ```
+
+  + .
+
+  
+
+## Diferentes formas de criar Controllers
+
+
+
+```shell
+php artisan make:model --migration --controller --resource Marca
+```
+
+ outra podemos simplificar como
+
+```sh
+php artisan make:model -mcr Modelo
+```
+
+Cria também seeder e factory
+
+```sh
+php artisan make:model --all Modelo
+```
+
+e simplificando
+
+```sh
+php artisan make:model -a Cliente
+```
+
+e também locação:
+
+```sh
+ php artisan make:model -a Locacao --resource
+```
+
++ `--resource`: cria no controller os métodos default index, show, destroy
+
+## Listar comando `php artisan list`
 
 ```
 

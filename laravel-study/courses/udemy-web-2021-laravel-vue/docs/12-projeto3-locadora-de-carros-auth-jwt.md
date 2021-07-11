@@ -1,101 +1,60 @@
 # Seção 18: App 03 - Locadora de Carros - Autenticação JWT
 
-O que é autenticaçâo:
+Como é todo o processo de autenticação JWT para API:
 
 1. O cliente envia usuário e senha para API
-2. Essa vlida os dados, se estiverem autenticados, retorna um token de autorizaçâo e armazena esse token no BD. O token retornado devera ser guardado e usado nas requisiçôes futuras
-3. Com esse Token o usário pode acessar a API. 
-4. (HAPPY END) Cada rota vai verificar o 'Bearer' do token, e verificar se for valido. Se sim, acessa o recruso
+2. Essa válida os dados, se estiverem autenticados, retorna um token de autorização e armazena esse token no BD. O token retornado devera ser guardado e usado nas requisições futuras
+3. Com esse Token o usuário pode acessar a API. 
+4. (HAPPY END) Cada rota vai verificar o 'Bearer' do token, e verificar se for valido. Se sim, acessa o recurso
 5. (DEAD END) tempo do token expirado, token invalido
 
-## instalando o pacote jwt-auth
+## Instalando o pacote jwt-auth
 
-existem varios outros pacotes, mas vamos usar esse
+Existem vários outros pacotes, mas vamos usar esse
 
-```
+```sh
 composer require tymon/jwt-auth "1.0.2"
 ```
 
-## COnfiigurar jwt
+## Configurar jwt
 
+Documentação para a lib `jwt-auth`: https://jwt-auth.readthedocs.io/en/develop/
 
+São 3 arquivos que devem ser iniciados
 
-https://jwt-auth.readthedocs.io/en/develop/
+`config/app.php`: É colocado  em `providers` a referencia a lib
 
-Sao 3 arguiso
-
-`config/app.php`
-
-```
+```php
 'providers' => [
-Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+	Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 ]
 ```
 
-`config/hwt.php`
+`config/jwt.php` : Esse arquivo é criado com o comando abaixo
 
-criado com o comando
-
-```
+```shell
 php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
 ```
 
-depois
+depois geramos a chave com o comando a seguir
 
-```
+```shell
 php artisan jwt:secret
 ```
 
-cria a chave no `.env` e vamos por o tempo do token
-
-```
-JWT_TTL=120
-```
-
-
+Vai criar o secrete no `.env` 
 
 ## Começar a usar o JWT
 
-Por default, quando se isntla o laraelvel já vem um User no Models.
+Por default, quando se instala o Laravel já vem um User no Models.
 
-Vamos reaproveitá-lo
+Vamos reaproveita-lo
 
-Vamos por os seguintes codigos
+Vamos por os seguintes códigos no model de User:
 
-```
-use Tymon\JWTAuth\Contracts\JWTSubject; // importar
+OBS: Esses código vinheram da documentação
 
-class User extends Authenticatable implements JWTSubject
-{ // implementar
-
-// copiar eesse dois codigos do docs
-
-   /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-```
-
-
-
-
-
-```
+```php
 <?php
 
 namespace App\Models;
@@ -104,38 +63,25 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Tymon\JWTAuth\Contracts\JWTSubject; //H ERE
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject // HERE
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -147,7 +93,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-    public function getJWTIdentifier()
+    public function getJWTIdentifier() // HERE
     {
         return $this->getKey();
     }
@@ -157,7 +103,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims() // HERE
     {
         return [];
     }
@@ -167,9 +113,9 @@ class User extends Authenticatable implements JWTSubject
 
 Agora em `config/auth.php`
 
-vamos mudar poara usar autenticaão por token
+vamos mudar PARA usar autenticação por token
 
-```
+```php
 api' => [
             'driver' => 'jwt',
             'provider' => 'users',
@@ -177,30 +123,21 @@ api' => [
         ],
 ```
 
-## Rotas da autenticaçâo
+## Rotas da autenticação
 
-login, logu, refresh, me
+`login`, `logout`, `refresh`, me
 
-php artisan make:controller AuthcONTROLER
-
-em api.php
-
+```sh
+php artisan make:controller AuthController
 ```
+
+em `api.php` vai ficar
+
+```php
 <?php
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -219,9 +156,9 @@ Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
 Route::post('me', 'App\Http\Controllers\AuthController@me');
 ```
 
-conroller
+`AuthController`: Como vai começar **inicialmente**
 
-```
+```php
 <?php
 
 namespace App\Http\Controllers;
@@ -249,25 +186,22 @@ class AuthController extends Controller
 
 ```
 
-### aDICIONAR USER
+## Adicionar Usuário Manualmente pelo Tinker
 
-VAMOS USAR O TINKER
+Vamos usar o tinker e adicionar por esse shell
 
-PHP ARTISAN TINKER
-
-$USER = NEW aPP\mODELS\uSER();
-
-$user->name = 'jorge'
-
-$user->email = 'jorge#tests'
-
-$user->password = bcrypt('1234')
-
-var_dump(uSER->GETaTTRIBUTES())
-
-## LOGIN
-
+```sh
+php artisan tinker
+>> $user = new app\models\user();
+>> $user->name = 'jorge'
+>> $user->email = 'jorge#tests'
+>> $user->password = bcrypt('1234')
+>> var_dump(user->getattributes())
 ```
+
+## Implementando método de login
+
+```php
 <?php
 
 namespace App\Http\Controllers;
@@ -280,7 +214,7 @@ class AuthController extends Controller
         
         $credenciais = $request->all(['email', 'password']); //[]
 
-        //autenticação (email e senha)
+        // autenticação (email e senha)
         // USAMOS API POR CAUS DO config/auth.php que configuramo antes
         $token = auth('api')->attempt($credenciais);
         
@@ -313,13 +247,13 @@ class AuthController extends Controller
 
 ```
 
-### Protegendo as rotas
+## Protegendo as rotas com middleware
 
-Usamos middlewares, para isos começamos adicionando seu apelido em kenrnel.php de http em '$routeMiddleware '
+Usamos middlewares, para isso começamos adicionando seu apelido em `Kernel.php` de http em `'$routeMiddleware '`
 
-app/Http/Kernel
+`app/Http/Kernel.php` : registrar middleware para ser usado nas APIs
 
-```
+```php
 protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
@@ -334,13 +268,9 @@ protected $routeMiddleware = [
     ];
 ```
 
-api.php
+`api.php`: Usando middleware registrado anteriormente e agrupando as rotas. Adicionamos o prefixo de `v1/`
 
-É feito duas coisa
-
-+ Agurpar num `group`, aplicar um middlewares de jwt.auth em todas elas, adicionar um prefixo da vesao da nossa api
-
-```
+```php
 Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::post('me', 'App\Http\Controllers\AuthController@me');
     Route::post('logout', 'App\Http\Controllers\AuthController@logout');
@@ -353,13 +283,11 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
 });
 
 Route::post('login', 'App\Http\Controllers\AuthController@login');
-
-
 ```
 
-# Como usar o token
+## Como usar o token
 
-Mande login e senha por JSON e assim  aramazendar o token
+Mande login e senha por JSON e assim armazenar o token
 
 ele fica na chave `Authorization`e o valor
 
@@ -367,44 +295,43 @@ ele fica na chave `Authorization`e o valor
 Bearer o_seu_token_582y395y23958y32952938529
 ```
 
-e tambem deixar `Accept: application/json`
+e também deixar `Accept: application/json`
 
-### os outros  Metodos
+## O resto dos métodos
 
-me: saber quem é o usaurio e senha
++ `me()`
+  +  saber quem é o usuário e senha
+  + retorna dados do usuário, tudo menos o password criptografado:` (id, name, email, email_evrified_at, creat_at, update_at)`
 
-me: retorna dados do usuario, tudo menos o password encriptografado: id, name, email, email_evrified_at, creat_at, update_at
++ `refresh()`: 
+  + renovar a autorização (so funciona se já estiver autenticado). Tem que passar o token no header corretamente, aí, irá retornar um novo token, e o outro token vai se anulado
 
-refrehs: renovar a autorizaç^o(so funciona se ja estiver autenticado). Tm que passar o token no header corretamente, aí, irá retornar um novo token, e o outro token vai se anuldao
++ `logout()`
+  + ele coloca o token na blacklist, ficam proibido. Perceba, não é retirar o token, e sim INAVALIDALO
 
-
-
-logout: ele coloca o token na blacklist, ficam proibido. Perceba, nao é retirar o token, e sim INAVALIDALO
-
-```
+```php
 public function logout() {
-        auth('api')->logout();
-        return response()->json(['msg' => 'Logout foi realizado com sucesso!']);
-    }
+    auth('api')->logout();
+    return response()->json(['msg' => 'Logout foi realizado com sucesso!']);
+}
 
-    public function refresh() {
-        $token = auth('api')->refresh(); //cliente  tem que encaminhar um jwt válido  no hedar
-        return response()->json(['token' => $token]);
-    }
+public function refresh() {
+    $token = auth('api')->refresh(); //cliente  tem que encaminhar um jwt válido  no hedar
+    return response()->json(['token' => $token]);
+}
 
-    public function me() {
-        return response()->json(auth()->user());
-    }
+public function me() {
+    return response()->json(auth()->user());
+}
 ```
 
-rECOMENDAÇaO: NAO COLQOUE NO PAYLOAD RECOMENDAÇÔES SENSNIVEIS COMO USER/SENHA
+**Recomendação:** Não coloque no `paylod` dados sensíveis como user/senha, pois são facilmente decriptografados em `jwt.io`
 
-## Configurar tmepo
+## Configurar tempo do token
 
- na variavel de ambiente
+Na variável de ambiente `.env` : Equivale a 2 horas
 
 ```
 JWT_TTL=120 
 ```
 
-Equivale a 2 hotas

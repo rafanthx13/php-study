@@ -2,11 +2,11 @@
 
 Motor de renderizaçâo do laravel
 
-Atráves do blade, podemos ter um super-set do PHP a ser interpretado pelo balde.
+Através do blade, podemos ter um super-set do PHP a ser interpretado pelo balde.
 
-O blade nâo exclui a sintaxe default do php, ele a extende
+O blade não exclui a sintaxe default do php, ele a entende
 
-por isso os arquivos sâo extensão `name_file.blade.php`
+por isso os arquivos são extensão `name_file.blade.php`
 
 ## CheatSheet
 

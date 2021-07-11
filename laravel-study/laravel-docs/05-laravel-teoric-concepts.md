@@ -1,30 +1,36 @@
 # Conceitos do Laravel
 
-## Laravel Retornos em api.web
+## Laravel Retornos em `routes/api.php`
 
-Tudo que retonar como array associativo é convertido para JSON:
+Tudo que retomar como array associativo é convertido para JSON em `api.php`. Para isso, os header devem ser  `Accept: application/json`
 
+````php
+return ['errors' => 'vira_json'];
 ````
-return ['errors' => 'dgijsjdgds'];
-````
 
-## PHP Lembrates
+## PHP Lembretes
 
-**Difeneça entre -> e ::**
+**Diferença entre -> e ::**
 
-Usmaos '->' ppara chamar um método comun
+Usamos `'->'` para chamar um **método comuns**
+
+```
 $name = $foo->getName();
+```
 
-Usamos '::" para executar um método estático
+Usamos `'::'` para executar um **método estáticos**
+
+```
 $name = $foo::getName();
+```
 
 **function dd()**
 
-Use ela ao invez de var_dunp  para ver o conteudo e ocupar todoa a tela. Assim fica mais fácil de ver a variavel
+Use ela ao invés de `var_dump()`  para ver o conteúdo e ocupar todo a a tela. Assim fica mais fácil de ver a variável
 
 ## Update Views
 
-Se vocÊ trocar a view, muitas vezes nâo vai atualizar na hora. Entâo, escere alguma coisa nos arquivos novos que asism vai forçar a reler. Nâo tem nada haver com cahce e nâo sei porque isso acontece.
+Se você trocar a view, muitas vezes nãovai atualizar na hora. Então, escere alguma coisa nos arquivos novos que asism vai forçar a reler. nãotem nada haver com cahce e nãosei porque isso acontece.
 
 ````
 https://stackoverflow.com/questions/37503627/blade-view-not-reflecting-changes

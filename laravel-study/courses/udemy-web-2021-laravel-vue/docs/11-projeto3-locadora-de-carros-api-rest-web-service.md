@@ -2,37 +2,37 @@
 
 ## Iniciar Projeto
 
-```
+```sh
 composer create-project --prefer-dist laravel/laravel=8.5.9 03_app_locadora_carros
 ```
 
 ## Criando Componentes Laravel pelo artisan
 
-```
+```shell
 php artisan make:model --migration --controller --resource Marca
 ```
 
  outra podemos simplificar como
 
-```
+```sh
 php artisan make:model -mcr Modelo
 ```
 
 Cria também seeder e factory
 
-```
+```sh
 php artisan make:model --all Modelo
 ```
 
 e simplificando
 
-```
+```sh
 php artisan make:model -a Cliente
 ```
 
 e também locação:
 
-```
+```sh
  php artisan make:model -a Locacao --resource
 ```
 
@@ -40,7 +40,7 @@ e também locação:
 
 ## Criar Banco de Dados
 
-```
+```sql
 create databse lc;
 ```
 
@@ -50,7 +50,7 @@ Alterar o `.env` para por nossos dados do nosso banco de dados
 
 ### Alteração do nome plural no Laravel
 
-É padrâo do Laravel que o `Model` tenha o nome em singular e o nome da tabela seja o mesmo nome acrescido de `s`.
+É padrão do Laravel que o `Model` tenha o nome em singular e o nome da tabela seja o mesmo nome acrescido de `s`.
 
 Acontece que em português `locacao` vira `locacaos`,
 
@@ -58,15 +58,15 @@ Acontece que em português `locacao` vira `locacaos`,
 
 1. No `Model` ponha
 
-```
-protected $table= ''new-name"
+```php
+protected $table= "new-name"
 ```
 
 2. E na `Migration` mude o nome do arquivo antes de executá-la
 
 **Executar a migração**
 
-```
+```sh
 php artisan migrate
 ```
 
@@ -74,13 +74,13 @@ Em seguida, execute o seeder:
 
 Executar: `atabase\Seeders\DatabaseSeeder`
 
-```
+```sh
 php artisan db:seed
 ```
 
 Executar Seeder Específico 
 
-```
+```sh
 php artisan db:seed --class=UserSeeder
 ```
 
@@ -153,7 +153,7 @@ Em `MarcaController`
   + **SIM, É TÃO SIMPLES COMO NO DJANGO**
   + Em  `show` o Laravel já faz um Bind pelo ID, então `$marca` já é o dado em si.
     + Se passar algum ID que não tem, vai voltar erro, mas isso vamos modificar depois
-  + Em `update`, `Marca $marca` já faz o Bind com o ID, assim, pegamos essa `$marca` e alteramos ela, nem mesmo precisasmo mandar buscar antes de atualizar
+  + Em `update`, `Marca $marca` já faz o Bind com o ID, assim, pegamos essa `$marca` e alteramos ela, nem mesmo precisamos mandar buscar antes de atualizar
 
 ```php
 <?php
@@ -209,19 +209,21 @@ class MarcaController extends Controller
 
 ```
 
-Esse recurso do laravel de `Marca $marca` na chamada da funçâo, que faz o bind, é chamado de **TYPE BINDING**
+Esse recurso do laravel de `Marca $marca` na chamada da função, que faz o bind, é chamado de **TYPE BINDING**
 
 Há 3 formas de fazermos:
 
 + Métodos estáticos, como em `Maraca::all()`
 + Type Binding
-+ Injeçâo de Modelo
++ Injeção de Modelo
 
-### InjeçÂo de modelo
+### Modo de Injeção de Modelo
 
-MaracaControlle.php vai ficar da seguinte forma:
+Iremos usar esse modo (O terceiro, 3), pois fica mais legível para quem está começando no Laravel
 
-+ Sem usar Métodos estárico nem nenhum TypeBinding
+`MarcaControlle.php` vai ficar da seguinte forma:
+
++ OBS: Sem usar Métodos estático nem nenhum TypeBinding
 
 ```php
 <?php
@@ -233,6 +235,7 @@ use Illuminate\Http\Request;
 
 class MarcaController extends Controller
 {
+    // Injeção do Modelo internamente
     public function __construct(Marca $marca) {
         $this->marca = $marca;
     }
@@ -278,30 +281,31 @@ class MarcaController extends Controller
 
 **A FORMA DE INJEÇÂO DE MODELO FICA MELHOR PARA UM DESENVOLVEDOR LER, E VAMOS USAR ELA, ALÉM DISSO, SSÓ ACRESCENTA ALGUMAS LINHAS A MAIS, AINDA CONTINUA BEM SIMPLES**
 
-## Validação
+## Validação de Dados na API
 
-### Caso o Id nâo exista
+### Caso o Id não exista
 
-Exemplo para getOne (método show)
+Exemplo para `show()`
 
-```
-public function show($id)
+```php
+public function show($id) // getOne
     {
         $marca = $this->marca->find($id);
         if($marca === null) {
             return ['erro' => 'Recurso pesquisado não existe']
    
         } 
-
         return response()->json($marca, 200);
     }
 ```
 
-### Rtornando com Status Code de error
+Verificamos se o `find()` deu nulo ou não, se deu, enviamos mensagem de erro
 
-vamos utilizar o helper `response->json` e passar como 2 parametro o Status Code
+### Retornando com Status Code de error
 
-```
+Vamos utilizar o helper `response->json()` e passar como 2 parâmetro o Status Code
+
+```php
 public function show($id)
     {
         $marca = $this->marca->find($id);
@@ -314,17 +318,17 @@ public function show($id)
     }
 ```
 
-é prefereivel usar sempre ` response()->json` em todos os retornos, para nos, como programodores entendermos bem que código HTTP está sendo retornado, pois laravel á consegue retornar algumas coisa corretas atutomataicmente
+é preferível usar sempre ` response()->json` em todos os retornos, para nos, como programadores entendermos bem que código HTTP está sendo retornado, pois laravel á consegue retornar algumas coisa corretas automaticamente
 
-### Validando os parametros no POST
+### Validando os parâmetros no POST
 
-O Header da requisição (ou seja, quem cham) deve ter `Accept: application/json`, para que o `validate` funcione corretamente. Sem isso o laravel manda para a `home` pois vai fucnionar como o `validate` de um controller de uma rota de  `web.php`, um comportamente semelhante á: vocÊ repsonde um formulário, enviar, dar um erro e voltar para a própria página
+O Header da requisição (ou seja, quem chama) deve ter `Accept: application/json`, para que o `validate` funcione corretamente. Sem isso o laravel manda para a `home` pois vai funcionar como o `validate` de um controller de uma rota de  `web.php`, um comportamento semelhante á: você responde um formulário, enviar, dar um erro e voltar para a própria página
 
-Em suma: **O CLIENTE DEVE IMPLEMENTAR ACCPET: aaplication/json**
+Em suma: **O CLIENTE DEVE IMPLEMENTAR `Accept: application/json`**
 
-A validaçÂo é feita com 
+A validação é feita com 
 
-```
+```php
 public function store(Request $request)
     {
         
@@ -348,13 +352,13 @@ public function store(Request $request)
     }
 ```
 
-### Centralizar as regras de validaçâo
+### Centralizar as regras de validação
 
-Perceba que essas `$regaras` e `feedback` podem temambem ser usadas em `udpdate`. Há uma forma melhr de implementálas. **ENTAO, VAMOS COLOCÁ-LOS NO MODEL**
+Perceba que essas `$regaras` e `feedback` podem também ser usadas em `update`. Há uma forma melhor de implementá-las. **ENTAO, VAMOS COLOCÁ-LOS NO MODEL, assim, essa validaçôes poderão ser usadas tanto no `store()` quanto em `update()`**
 
 Em `Marca.php`
 
-```
+```php
 <?php
 
 namespace App\Models;
@@ -385,12 +389,11 @@ class Marca extends Model
 
 ```
 
-E o Controller vai ficar da seuinte forma
+E o Controller vai ficar da seguinte forma
 
-```
+```php
 public function store(Request $request)
     {
-        
         $request->validate($this->marca->rules(), $this->marca->feedback());
 
         $marca = $this->marca->create($request->all());
@@ -398,17 +401,15 @@ public function store(Request $request)
     }
 ```
 
-O validate altera a qrequest, se falha, vai voltar o json com o erro, se nao, volta o objeto marca criado.
+O `validate` altera a `request`, se falha, vai voltar o json com o erro, se não, volta o objeto marca criado.
 
-### Fazer o Updtate
+### Fazer o Update
 
-Acontece que as regras de `create` e `update` sâo as mesmas, mas **AS MENSAGENS DE FEED BACK DEVEM SER DIFERENTES**
+Acontece que as regras de `create` e `update` são as mesmas, mas **AS MENSAGENS DE FEED BACK DEVEM SER DIFERENTES**
 
+Vamos voltar ao `rule` de models de `Marca`
 
-
-Vamos voltasr ao rule de models de `Marca`
-
-```
+```php
 public function rules() {
         return [
             'nome' => 'required|unique:marcas|min:3',
@@ -417,9 +418,9 @@ public function rules() {
     }
 ```
 
-**Validaçâo `unique`**
+**Validação `unique`**
 
-A validaçâo `unique` tem 3 parÂmetros:
+A validação `unique` tem 3 parâmetros:
 
 ```
 1) tabela
@@ -427,44 +428,40 @@ A validaçâo `unique` tem 3 parÂmetros:
 3) id do registro que será desconsiderado na pesquisa
 ```
 
-Vamor por por para desconsiderar o própro ID. Isso porque. Como se está fazendo um UPDATE é calro que já existe aquele nome. O que queremos é que não repita um novo ID para o registro de um novo nome. 
+Vamos por por para desconsiderar o próprio ID. Isso porque. Como se está fazendo um UPDATE é claro que já existe aquele nome. O que queremos é que não repita um novo ID para o registro de um novo nome. 
 
+Para isso vamos alterar esse trecho pondo todos os parâmetros
 
-
-Para isso vamos alterar esse trecho ponod todos os parametros
-
-```
+```php
 public function rules() {
-        return [
-            'nome' => 'required|unique:marcas,nome,'.$this->id.'|min:3',
-            'imagem' => 'required'
-        ];
-
- 
-    }
+    return [
+        'nome' => 'required|unique:marcas,nome,'.$this->id.'|min:3',
+        'imagem' => 'required'
+    ];
+}
 ```
 
-assim vai desconsiderar o proprio ID quando fizer o UPDATE e não vai dar mais erro
+assim vai desconsiderar o próprio ID quando fizer o UPDATE e não vai dar mais erro
 
-Assim unique vai pesquisar por unique esceto o p´roprio dado se tiver
+Assim `unique` vai pesquisar por `unique` exceto próprio dado se tiver
 
-### Validaçâo paracial para HTTP PATCH
+### Validação parcial para HTTP PATCH
 
-Como está agora, o update só aceita se enviar todos os parametrtos.
+Como está agora, o update só aceita se enviar todos os parâmetros.
 
-Seria interresante se habilitarmos par ausar Path, ou sje,a mandar JSIn de so os parametros que queremos mudar.
+Seria interessante se habilitarmos para usar Path, ou seja,a mandar JSIn de so os parâmetros que queremos mudar.
 
 **Como fazer**
 
-Vamos usar `$request->method()` para sabermos se o método utilizado for UPDATE OU PATH, e vamos percorrer o que chegou e somente aplicar a validaçâo nos campos que chegaram. O código vai ficar assim:
+Vamos usar `$request->method()` para sabermos se o método utilizado for UPDATE OU PATH, e vamos percorrer o que chegou e somente aplicar a validação nos campos que chegaram. O código vai ficar assim:
 
 ```PHP
-public function update(Request $request, $id)
-    {
+public function update(Request $request, $id)    {
         $marca = $this->marca->find($id);
 
         if($marca === null) {
-            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+            return response()->json(
+                ['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
         }
 
     	// validaçâo para patch
@@ -499,21 +496,21 @@ dessa forma: `$regrasDinamicas` terá as regras de somente os campos que tiver e
 
 ## Receber Dados
 
-**A REQUISIÇâO DO CLIENT DEVE SER `form-data`, asism fica melhor de lidar com ela**
+**A Requisição DO CLIENT DEVE SER `form-data`, assim fica melhor de lidar no backend com arquivos**
 
-Vamos mandar nome e imagem. Nessa foma os paramertos tem tipagem
+Vamos mandar nome e imagem. Nessa forma os parâmetros tem tipagem
 
-Agente pega esse dados direto no request HA 3 FORMAS
+Agente pega esse dados direto no request . Há 3 formas.
 
-```
+```php
 $request->nome
 $request->get('nome')
 $request->input('nome')
 ```
 
-Se vocÊ fizer o mesmo com iamgem e daer 
+Se você fizer o mesmo com imagem e 
 
-```
+```php
 dd($request->imagem)
 ```
 
@@ -521,48 +518,43 @@ irá receber um objeto do tip `UploadFile`
 
 ## Onde Persistir Arquivos no Laravel
 
-Para salavar, basta executar o método `store` ue recebe 2 parametros: localdireitorio) e disco
+Para salvar, basta executar o método `store` que recebe 2 parâmetros: path (path de pasta) e disco (há 3 setores possiveis)
+
+**Disco**
 
 O DISCO É DEFINIDO EM `config/filesystem.php`
 
-Por padrâo temoso 3 discos definidos:
+Por padrão temos 3 discos definidos:
 
 + local : `/storage/app/`
 + public: `storage/app/public`
 + aws S3: `cloud`
 
-Por defaul té definido para salvar loca, entao, por isso vamos omitir o 2 parametro.
+Por default é definido para salvar em `local`, então, por isso vamos omitir o 2 parâmetro.
 
-OBS: Esses 2 direitoriaos storage ficam protejifdos, eles nao ficam expostos na web
+OBS: Esses 2 diretórios `storage` ficam protegidos, eles não ficam expostos na web
 
-**VAMOS SUALARV EM**: `publio` em `storage/app/public`
-
-
+**VAMOS SALVAR EM**: `publio` em `storage/app/public`
 
 Assim vai ficar
 
-```
-public function store(Request $request)
-    {
+```php
+public function store(Request $request)    {
         $request->validate($this->marca->rules(), $this->marca->feedback());
-
         $imagem = $request->file('imagem'); // recupera imagem fo form-data
-        $imagem_urn = $imagem->store('imagens', 'public'); // salva imagem na pasta imagens dentro do setor public que é storage/app/public
+        $imagem_urn = $imagem->store('imagens', 'public'); 
+    	// salva imagem na pasta imagens dentro do setor public que é storage/app/public
 		return response()->json($marca, 201);
     }
 ```
 
-O nome da imagme é gerado de forma aleartoria para evitar imagens duplicadas
+O nome da imagem é gerado de forma aleatória para evitar imagens duplicadas
 
 ## Salvar dados de imagem em banco
 
+Depois que salvamos o arquivo fisicamente, temos que recuperar seus dados. Isso é fetio no retorno do método `store()` na variável `$img_urn`
 
-
-**Recuperar nome e path da imagem e salavar no banco para usal**a depois
-
-O nome é o retorno do 'store'
-
-```
+```php
 public function store(Request $request)
     {
         $request->validate($this->marca->rules(), $this->marca->feedback());
@@ -581,47 +573,43 @@ public function store(Request $request)
 
 **Outro problema: restringir o tipo de dado**
 
-Da forma que está, pode-se passar qualquer aao que vai ser interpretado da memsa forma
+Da forma que está, pode-se passar qualquer dado que vai ser interpretado da mesma forma
 
 Podemos restringir a tipagem passando ais coisa na parte de `rules`
 
- 
-
-```
+```php
 public function rules() {
-        return [
-            'nome' => 'required|unique:marcas,nome,'.$this->id.'|min:3',
-            'imagem' => 'required|file|mimes:png'
-        ];
-
-    }
+    return [
+        'nome' => 'required|unique:marcas,nome,'.$this->id.'|min:3',
+        'imagem' => 'required|file|mimes:png'
+    ];
+}
     
-   public function feedback() {
-        return [
-            'required' => 'O campo :attribute é obrigatório',
-            'imagem.mimes' => 'O arquivo deve ser uma imagem do tipo PNG',
-            'nome.unique' => 'O nome da marca já existe',
-            'nome.min' => 'O nome deve ter no mínimo 3 caracteres'
-        ];
-    }
+public function feedback() {
+    return [
+        'required' => 'O campo :attribute é obrigatório',
+        'imagem.mimes' => 'O arquivo deve ser uma imagem do tipo PNG',
+        'nome.unique' => 'O nome da marca já existe',
+        'nome.min' => 'O nome deve ter no mínimo 3 caracteres'
+    ];
+}
 ```
 
-Assim, só irá aceitar png
+Assim, só irá aceitar `.png`
 
-## Criando simbolo/caminho simbolico para o storage
+## Criando símbolo/caminho simbólico para o `storage`
 
 quando agente faz
 
-```
+```sh
 php artisan serve
-
 ```
 
-agent fornece somente a pasta  `public`.
+agente fornece somente a pasta  `public`.
 
-Pra fornece as imanges em `storage/app/public` basta fazermos
+Pra fornece as imagens em `storage/app/public` basta fazermos
 
-```
+```sh
 php artisan storage:link
 ```
 
@@ -631,38 +619,38 @@ php artisan storage:link
 
 **Detalhe importante**
 
-Quando se envia imagem com `form-data` o Laravel nâo vai reconhcer direito para PUT e PATCH.
+Quando se envia imagem com `form-data` o Laravel não vai reconhecer direito para PUT e PATCH.
 
-form-data é ideal para POST, mas nâo queremos mudar, pois nao estamos colocando um reurso novo
+`form-data` é ideal para POST, mas não queremos mudar, pois não estamos colocando um recurso novo
 
 **COMO CORRIGIR**
 
-passamos no form data `_method` e passamos o verbo. Asim, basta adicionar um parametro da requisiçâo.
+passamos `no form-data`:  `_method` e passamos o verbo. Assim, basta adicionar um parâmetro da requisição.
 
 `_method: put`
 
 **UPDATE**
 
-o trehco que faz o update da imagen
+o trecho que faz o update da imagem
 
-```
+```php
 //remove o arquivo antigo caso um novo arquivo tenha sido enviado no request
-        if($request->file('imagem')) {
-            Storage::disk('public')->delete($marca->imagem);
-        }
-        
-        $imagem = $request->file('imagem');
-        $imagem_urn = $imagem->store('imagens', 'public');
+if($request->file('imagem')) {
+    Storage::disk('public')->delete($marca->imagem);
+}
 
-        $marca->update([
-            'nome' => $request->nome,
-            'imagem' => $imagem_urn
-        ]);
+$imagem = $request->file('imagem');
+$imagem_urn = $imagem->store('imagens', 'public');
+
+$marca->update([
+    'nome' => $request->nome,
+    'imagem' => $imagem_urn
+]);
 ```
 
-toda a funçâo
+toda a função para atualizar uma imagem
 
-```
+```php
 public function update(Request $request, $id)
     {
         $marca = $this->marca->find($id);
@@ -707,50 +695,49 @@ public function update(Request $request, $id)
     }
 ```
 
-## **DELETAR**
+## Deletar Imagem
 
-```
+```php
 use Illuminate\Support\Facades\Storage;
 ```
 
-TRECHO
+Trecho que deleta uma imagem física
 
-```
+```php
 Storage::disk('public')->delete($marca->imagem);        
 
-        $marca->delete();
-        return response()->json(['msg' => 'A marca foi removida com sucesso!'], 200);
+$marca->delete();
+return response()->json(['msg' => 'A marca foi removida com sucesso!'], 200);
 ```
 
-COMPLETO
+Trecho do código completo
 
-```
-public function destroy($id)
-    {
-        $marca = $this->marca->find($id);
+```php
+public function destroy($id){
+    $marca = $this->marca->find($id);
 
-        if($marca === null) {
-            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
-        }
-
-        //remove o arquivo antigo
-        Storage::disk('public')->delete($marca->imagem);        
-
-        $marca->delete();
-        return response()->json(['msg' => 'A marca foi removida com sucesso!'], 200);
-        
+    if($marca === null) {
+        return response()->json(
+            ['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
     }
+
+    //remove o arquivo antigo
+    Storage::disk('public')->delete($marca->imagem);        
+
+    $marca->delete();
+    return response()->json(['msg' => 'A marca foi removida com sucesso!'], 200);
+}
 ```
 
 ## ModeloController
 
-Antse estavamos em `MarcaController` agora vamos para `ModeloController`
+Antes estávamos em `MarcaController` agora vamos para `ModeloController`
 
-### Fazer Resource do ModleoController
+### Fazer Resource do ModeloController
 
 `Models/Modelo.php`
 
-```
+```php
 <?php
 
 namespace App\Models;
@@ -776,12 +763,9 @@ class Modelo extends Model
         ];
     }
 }
-
 ```
 
-
-
-Controller: Vai ser muito parecido com o de `MarcaController`
+`ModeloController.php`: Vai ser muito parecido com o de `MarcaController`
 
 ```php
 <?php
@@ -899,19 +883,18 @@ class ModeloController extends Controller
 
 lembrando:
 
+```
 content-type: application/json
-
 forma do body: form-data
+```
 
 ### Relação 1:N (1 marca tem N Modelos)
 
-Um mondelo pertence a uma marca, e uma marca possui varios modelos
+Um modelo pertence a uma marca, e uma marca possui vários modelos
 
+`Modelos.php`
 
-
-Modelos.php
-
-```
+```php
 <?php
 
 namespace App\Models;
@@ -942,12 +925,11 @@ class Modelo extends Model
         return $this->belongsTo('App\Models\Marca');
     }
 }
-
 ```
 
-Marca.php
+`Marca.php`
 
-```
+```php
 <?php
 
 namespace App\Models;
@@ -992,11 +974,9 @@ class Marca extends Model
 
 Usando eles em index
 
-MarcaController
+`MarcaController.php`
 
-
-
-```
+```php
 <?php
 
 namespace App\Http\Controllers;
@@ -1023,9 +1003,9 @@ class MarcaController extends Controller
     }
 ```
 
-ModeloController
+`ModeloController.php`
 
-```
+```php
 <?php
 
 namespace App\Http\Controllers;
@@ -1053,52 +1033,50 @@ class ModeloController extends Controller
     }
 ```
 
-Observaçôes
+Observações
 
-+ O méotod `with` está em Eager Loading e Lazy Loading
-+ nÂo podemo usar o método estático `all()` pois ele é uma consulta seguida de `get()` sendo queprecisamos fazer mais coisa nele. Uma questão de tiagem e possibildiade da tipagem
-  + //all() -> criando um obj de consulta + get() = collection
++ O método `with` está em Eager Loading e Lazy Loading
++ não podemos usar o método estático `all()` pois ele é uma consulta seguida de `get()` sendo que precisamos fazer mais coisa nele. Uma questão de tipagem e possibilidade da tipagem
+  + //all() -> criando um objetode consulta + get() = collection
   + //get() -> modificar a consulta -> collection
 
 ### Mudando Update para Path
 
-Nosso sodico suporta PATH, mas se nao passarmos todos os parametros, dá erro. 
+Nosso código suporta PATH, mas se não passarmos todos os parâmetros, dá erro. 
 
-Ainda nâo é posivle deixar de passar todos os parametro. Exmple: Marc tem dois parametros (nome,imagem). Se enviar imagem e nao enviar nome, vai fazer um `$model->nome = $nome` onde  `$nome == null`
+Ainda não é possível deixar de passar todos os parâmetro. Exemplo: Marc tem dois parâmetros (nome,imagem). Se enviar imagem e não enviar nome, vai fazer um `$model->nome = $nome` onde  `$nome == null`
 
-```
+```php
 // com é: DA ERRO
 $marca->update([
-            'nome' => $request->nome,
-            'imagem' => $imagem_urn
-        ]);
+    'nome' => $request->nome,
+    'imagem' => $imagem_urn
+]);
 ```
 
-como solucionar: 
+**COMO SOLUCIONAR**
 
 Vamos combinar `fill()` e `all()`, assim, vamos pegar o objeto e mudar nele só aquilo que enviou.
 
-Assim, se por exemplo vinher sem nome, vai pegar o nome que está no banco e mondar o bojeto no controller. 
+Assim, se por exemplo vinher sem nome, vai pegar o nome que está no banco e mondar o objeto no controller. 
 
-```
+```php
 // DEPOIS
-//preencher o objeto $marca com os dados do request
+// Preencher o objeto $marca com os dados do request
 $marca->fill($request->all());
 $marca->imagem = $imagem_urn;
 $marca->save();
 ```
 
-O método `save()` sabe que, se foir inserir algo com id, nâo vai criar um novo registro e seim atualizar
+O método `save()` sabe que, se foi inserir algo com id, não vai criar um novo registro e siem atualizar
 
-### Filtros: retornar certos atributosespecificos
+### Filtros: retornar certos atributos específicos
 
-O que queremos: que a api seja capaz de retonrar certo atribuos de acordo com o que agente passar para ele retonrar.
+O que queremos: que a api seja capaz de retornar certo atributos de acordo com o que agente passar para ele retornar.
 
-Exemplo para ModeloController no método `index()`
+Exemplo para `ModeloController` no método `index()`
 
- 
-
-```
+```php
 <?php
 
 namespace App\Http\Controllers;
@@ -1112,7 +1090,6 @@ class ModeloController extends Controller
     public function __construct(Modelo $modelo) {
         $this->modelo = $modelo;
     }
-
    
     public function index(Request $request)
     {
@@ -1130,40 +1107,34 @@ class ModeloController extends Controller
     }
 ```
 
-Observaçôes:
+Observações:
 
-+ Esse atributos vao vir do form-data, por isso podemos fazer `$request->atributos`
-+ usamos `selectRaw` pois sem ele a string tme que se `'nome', 'nomw2'`,  e com ele pode ser `nome,nomw2` pois vai aceitar essa string unico ao invez de pasar n parametros
++ Esse atributos vão vir do `form-data`, por isso podemos fazer `$request->atributos`
++ usamos `selectRaw` pois sem ele a string tem que se `'nome', 'nomw2'`,  e com ele pode ser `nome,nomw2` pois vai aceitar essa string único ao invés de passar n parâmetros
 + a url de chamada `loachost:8080/api/modelo?atributos=id,nome,modelo_id`
 
 ### Filtros: obtendo colunas especificas dentro do with
 
 **with**
 
-+ o with permite recuperra certas colnas com `:`
-+ Exmeplo: `->with('marca:id,nome')`
++ o with permite recupera certas colunas com `:`
++ Exemplo: `->with('marca:id,nome')`
 
-Poderiamos fazer entao para que a linha do selectRaw seja
+Poderíamos fazer então para que a linha do `selectRaw` seja
 
-```
+```php
 $atributos_marca
 $modelos = $this->modelos->selectRaw($atributos)->with('marca:',$atributos_marca)->get()
 ```
 
 Mas assim: SO VAI FUNCIONAR SE HOUVER `$atributo`
 
-
-
-
-
-**O resoler isso**
+**O resolver isso**
 
 + Vamos separar cada parte: se houver atributos_marca, pega algumas colunas, se nao, pega tudo
-+ E tudo isso feito antes do selectRaw(). Nesse caso, a ordem importa
++ E tudo isso feito antes do `selectRaw()`. Nesse caso, a ordem importa
 
-
-
-```
+```php
 public function index(Request $request)
     {
         $modelos = array();
@@ -1194,7 +1165,7 @@ como é a url
 
 `loachost:8080/api/modelo?atributos=id,nome,modelo_id?atributo_marca=nome?filtro=nome:=:ford Ka 20`
 
-Vamos sesprara: nome de seu valor com `:=:` só por isos usamos dois pontos
+Vamos separar: nome de seu valor com `:=:` só por isso usamos dois pontos
 
 ```
 if($request->has('filtro')) {
@@ -1208,7 +1179,7 @@ if($request->has('filtro')) {
 + $condicoes[1] => é o char  `=` ou `like`
 + $condicoes[2] => a pesquisa em si
 
-Exmeplo do que aceita
+Exemplo do que aceita
 
 ```
 numero_porta:>:4
@@ -1217,7 +1188,7 @@ nome:like:%Ford%
 
 como vai ficar o index
 
-```
+```php
 public function index(Request $request)
     {
         $modelos = array();
@@ -1248,7 +1219,7 @@ public function index(Request $request)
     }
 ```
 
-### Passando multiplos filtros de pesquisa
+### Passando múltiplos filtros de pesquisa
 
 Usaremos um char especifico para separa cada parte `;`
 
@@ -1256,19 +1227,19 @@ Usaremos um char especifico para separa cada parte `;`
 
 COMO VAI FICAR
 
-```
+```php
 if($request->has('filtro')) {
-            $filtros = explode(';', $request->filtro); // explodo e para cada um, aplico um filtro
-            foreach($filtros as $key => $condicao) {
+    $filtros = explode(';', $request->filtro); // explodo e para cada um, aplico um filtro
+    foreach($filtros as $key => $condicao) {
 
-                $c = explode(':', $condicao);
-                $modelos = $modelos->where($c[0], $c[1], $c[2]);
+        $c = explode(':', $condicao);
+        $modelos = $modelos->where($c[0], $c[1], $c[2]);
 
-            }
-        }
+    }
+}
 ```
 
-Isso só é possivel porque é um `QueryBuilder`, só será executado mesmo quando fizermos o `get()` final
+Isso só é possível porque é um `QueryBuilder`, só será executado mesmo quando fizermos o `get()` final
 
 Assim eu posso passar como url
 
@@ -1280,7 +1251,7 @@ Assim eu posso passar como url
 
 Vamos aplicar os mesmos filtros no outro lado, em `MarcaController`
 
-```
+```php
 public function index(Request $request)
     {
         $marcas = array();
@@ -1309,7 +1280,6 @@ public function index(Request $request)
             $marcas = $marcas->get();
         }
 
-
         //$marcas = Marca::all();
         //$marcas = $this->marca->with('modelos')->get();
         return response()->json($marcas, 200);
@@ -1318,23 +1288,21 @@ public function index(Request $request)
 
 ## Design Pattern - Repository
 
-Na seçâo anteioi, compiamos toda a lógica de filtragem de `ModeloController` para `MarcaController` .
+Na seção anterior, copiamos toda a lógica de filtragem de `ModeloController` para `MarcaController` .
 
-Estamos agredindo um bom principio da programaçao que é a reutilizaçâo de código.
+Estamos agredindo um bom principio da programação que é a reutilização de código.
 
 Vamos utilizar o design Pattern Repository para ser uma interface entre Controller e Model, para  que essas regras e outras fiquem centralizadas e o código melhorado.
 
-Assim, nao vamos precisa mais fazwr Ctrl+c + crl+v da parte de `filtro`
+Assim, não vamos precisa mais fazer Ctrl+c + crl+v da parte de `filtro`
 
 ### Criando Repository
 
-Repository nao é algo default do laravel, vamos crialo do zero
-
-
+Repository não é algo default do laravel, vamos cria-lo do zero
 
 `app/Repositorie/MarcaRepository.php`
 
-```
+```php
 <?php
 
 namespace App\Repositories;
@@ -1376,13 +1344,11 @@ class MarcaRepository {
 ?>
 ```
 
-Esse repository sera consumido pelo seu respectivo controller
+Esse repository será consumido pelo seu respectivo controller
 
 `MarcaControler.php`
 
-
-
-```
+```php
 <?php
 
 namespace App\Http\Controllers;
@@ -1397,11 +1363,7 @@ class MarcaController extends Controller
     public function __construct(Marca $marca) {
         $this->marca = $marca;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index(Request $request)
     {
 
@@ -1426,17 +1388,17 @@ class MarcaController extends Controller
     }
 ```
 
-Estamos apenas sepradano e reorganiznaod as coisa.
+Estamos apenas separando e reorganizando as coisa.
 
-Perceba que o código ficou maix enxuto e o controller ficou mais legível
+Perceba que o código ficou mais enxuto e o controller ficou mais legível
 
-### Abastract Repository
+### Abstract Repository
 
-Podemos copiar esse ultimo repositorie e fazer para os outros, mas ai estariamos denovo duplicando código.
+Podemos copiar esse ultimo repository e fazer para os outros, mas ai estaríamos denovo duplicando código.
 
-Entao vams crir um repository abstrato e ele para que outros repository o implementem
+Então vamos criar um repository abstrato e ele para que outros repository o implementem
 
-```
+```php
 <?php
 
 namespace App\Repositories;
@@ -1477,11 +1439,11 @@ abstract class AbstractRepository {
 ?>
 ```
 
-Assimos outros repositoreis ficma
+Assim os outros repositores ficam
 
-ModeloRepository.php
+`ModeloRepository.php`
 
-```
+```php
 <?php
 
 namespace App\Repositories;
@@ -1492,9 +1454,9 @@ class ModeloRepository extends AbstractRepository {
 ?>
 ```
 
-MarcaRepository.php
+`MarcaRepository.php`
 
-```
+```php
 <?php
 
 namespace App\Repositories;
@@ -1508,15 +1470,15 @@ class MarcaRepository extends AbstractRepository {
 
 Agora se quisermos fazer essa mesma lógica, basta criar um repository que implemente como os exemplo acima
 
-## O resto dos Contorllers
+## Outros Controllers e Models
 
 todos tem um repository igual como vimos antes
 
 ### Models
 
-Cliente
+`Models\Cliente.php`
 
-```
+```php
 <?php
 
 namespace App\Models;
@@ -1539,9 +1501,9 @@ class Cliente extends Model
 
 ```
 
-Locacao
+`Models\Locacao.php`
 
-```
+```php
 <?php
 
 namespace App\Models;
@@ -1571,9 +1533,9 @@ class Locacao extends Model
 
 ```
 
-Carro
+`Models\Carro.php`
 
-```
+```php
 <?php
 
 namespace App\Models;
@@ -1602,13 +1564,11 @@ class Carro extends Model
 
 ```
 
-
-
 ### Controllers
 
-ClienteController
+`ClienteController.php`
 
-```
+```php
 <?php
 
 namespace App\Http\Controllers;
@@ -1623,11 +1583,6 @@ class ClienteController extends Controller
         $this->cliente = $cliente;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $clienteRepository = new ClienteRepository($this->cliente);
@@ -1643,12 +1598,6 @@ class ClienteController extends Controller
         return response()->json($clienteRepository->getResultado(), 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate($this->cliente->rules());
@@ -1660,12 +1609,6 @@ class ClienteController extends Controller
         return response()->json($cliente, 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Cliente  $cliente
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $cliente = $this->cliente->find($id);
@@ -1676,19 +1619,13 @@ class ClienteController extends Controller
         return response()->json($cliente, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cliente  $cliente
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $cliente = $this->cliente->find($id);
 
         if($cliente === null) {
-            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+            return response()->json(
+                ['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
         }
 
         if($request->method() === 'PATCH') {
@@ -1716,31 +1653,28 @@ class ClienteController extends Controller
         return response()->json($cliente, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Cliente  $cliente
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $cliente = $this->cliente->find($id);
 
         if($cliente === null) {
-            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+            return response()->json(
+                ['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
         }
 
         $cliente->delete();
-        return response()->json(['msg' => 'O cliente foi removido com sucesso!'], 200);
+        return response()->json(
+            ['msg' => 'O cliente foi removido com sucesso!'], 200);
         
     }
 }
 
 ```
 
-LocacaoController
+`LocacaoController.php`
 
-```
+```php
 <?php
 
 namespace App\Http\Controllers;
@@ -1755,11 +1689,6 @@ class LocacaoController extends Controller
         $this->locacao = $locacao;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $locacaoRepository = new LocacaoRepository($this->locacao);
@@ -1775,22 +1704,6 @@ class LocacaoController extends Controller
         return response()->json($locacaoRepository->getResultado(), 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate($this->locacao->rules());
@@ -1809,12 +1722,7 @@ class LocacaoController extends Controller
         return response()->json($locacao, 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Locacao  $locacao
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $locacao = $this->locacao->find($id);
@@ -1825,30 +1733,14 @@ class LocacaoController extends Controller
         return response()->json($locacao, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Locacao  $locacao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Locacao $locacao)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Locacao  $locacao
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $locacao = $this->locacao->find($id);
 
         if($locacao === null) {
-            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+            return response()->json(
+                ['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
         }
 
         if($request->method() === 'PATCH') {
@@ -1876,31 +1768,28 @@ class LocacaoController extends Controller
         return response()->json($locacao, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Locacao  $locacao
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $locacao = $this->locacao->find($id);
 
         if($locacao === null) {
-            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+            return response()->json(
+                ['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
         }
 
         $locacao->delete();
-        return response()->json(['msg' => 'A locação foi removida com sucesso!'], 200);
+        return response()->json(
+            ['msg' => 'A locação foi removida com sucesso!'], 200);
         
     }
 }
 
 ```
 
-CarroController
+`CarroController.php`
 
-```
+```php
 <?php
 
 namespace App\Http\Controllers;
@@ -1915,11 +1804,6 @@ class CarroController extends Controller
         $this->carro = $carro;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $carroRepository = new CarroRepository($this->carro);
@@ -1942,22 +1826,6 @@ class CarroController extends Controller
         return response()->json($carroRepository->getResultado(), 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate($this->carro->rules());
@@ -1972,12 +1840,7 @@ class CarroController extends Controller
         return response()->json($carro, 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Carro  $carro
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $carro = $this->carro->with('modelo')->find($id);
@@ -1988,30 +1851,13 @@ class CarroController extends Controller
         return response()->json($carro, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Carro  $carro
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Carro $carro)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Carro  $carro
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $carro = $this->carro->find($id);
 
         if($carro === null) {
-            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+            return response()->json(
+                ['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
         }
 
         if($request->method() === 'PATCH') {
@@ -2039,22 +1885,19 @@ class CarroController extends Controller
         return response()->json($carro, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Carro  $carro
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $carro = $this->carro->find($id);
 
         if($carro === null) {
-            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+            return response()->json(
+                ['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
         }
 
         $carro->delete();
-        return response()->json(['msg' => 'O carro foi removido com sucesso!'], 200);
+        return response()->json(
+            ['msg' => 'O carro foi removido com sucesso!'], 200);
         
     }
 }
