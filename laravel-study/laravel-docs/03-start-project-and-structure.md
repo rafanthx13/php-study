@@ -14,9 +14,13 @@ Criar um projeto laravel de uma versão expecifica
 > composer create-project laravel/laravel="6.*" my_project
 ````
 
+composer create-project --prefer-dist laravel/laravel=8.5.9 03_app_locadora_carros
+
+
+
 ## Executar projeto
 
-Executado no root da pasta do projeto laravel. Abre um servidor em ``localhost:8000```.
+Executado no root da pasta do projeto laravel. Abre um servidor em ``localhost:8000``.
 
 ````
 > php artisan serve
